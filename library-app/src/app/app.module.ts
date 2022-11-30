@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule} from '@angular/material/table';
 import { BooksCatalogComponent } from './books-catalog/books-catalog.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BooksCatalogComponent,
+    TopBarComponent,
   ],
   imports: [
     BrowserModule,

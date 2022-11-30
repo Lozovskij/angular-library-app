@@ -4,7 +4,7 @@ import { Book, books } from '../books';
 @Component({
   selector: 'app-books-catalog',
   templateUrl: './books-catalog.component.html',
-  styleUrls: ['./books-catalog.component.sass']
+  styleUrls: ['./books-catalog.component.scss']
 })
 export class BooksCatalogComponent {
   displayedColumns: string[] = ['title', 'author'];
