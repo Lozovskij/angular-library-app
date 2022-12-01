@@ -8,6 +8,7 @@ import { MatTableModule} from '@angular/material/table';
 import { BooksCatalogComponent } from './books-catalog/books-catalog.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { BookDetailsComponent } from './book-details/book-details.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { BookDetailsComponent } from './book-details/book-details.component';
     BooksCatalogComponent,
     TopBarComponent,
     BookDetailsComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
