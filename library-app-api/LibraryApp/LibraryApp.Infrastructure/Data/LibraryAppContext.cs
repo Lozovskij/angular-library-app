@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryApp.Infrastructure.Data;
 
-internal class LibraryAppContext : DbContext
+public class LibraryAppContext : DbContext
 {
     public LibraryAppContext(DbContextOptions<LibraryAppContext> options) : base(options) { }
 
