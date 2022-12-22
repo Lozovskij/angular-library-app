@@ -1,4 +1,8 @@
+using LibraryApp.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
+
+Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 
 // Add services to the container.
 
