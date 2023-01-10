@@ -5,9 +5,11 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp.Web", "LibraryApp.Web\LibraryApp.Web.csproj", "{95DDAB81-D290-48AA-8F5B-99C724EA6136}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryApp.Core", "LibraryApp.Core\LibraryApp.Core.csproj", "{392CB08F-3290-4641-BDA2-625EC3BAAFA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp.Core", "LibraryApp.Core\LibraryApp.Core.csproj", "{392CB08F-3290-4641-BDA2-625EC3BAAFA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryApp.Infrastructure", "LibraryApp.Infrastructure\LibraryApp.Infrastructure.csproj", "{A9C4DBE9-F8B7-4C3A-9B6D-24790D8AF90D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryApp.Infrastructure", "LibraryApp.Infrastructure\LibraryApp.Infrastructure.csproj", "{A9C4DBE9-F8B7-4C3A-9B6D-24790D8AF90D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{C03B0D07-CF36-4E02-AE6A-BEEB7AFAF6EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{A9C4DBE9-F8B7-4C3A-9B6D-24790D8AF90D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9C4DBE9-F8B7-4C3A-9B6D-24790D8AF90D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9C4DBE9-F8B7-4C3A-9B6D-24790D8AF90D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C03B0D07-CF36-4E02-AE6A-BEEB7AFAF6EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C03B0D07-CF36-4E02-AE6A-BEEB7AFAF6EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C03B0D07-CF36-4E02-AE6A-BEEB7AFAF6EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C03B0D07-CF36-4E02-AE6A-BEEB7AFAF6EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
