@@ -22,7 +22,7 @@ public class TokenService : ITokenService
         {
             //TODO use constants
             new Claim(ClaimTypes.Role, "Patron"),
-            new Claim("demoId", patron.DemoId.HasValue ? patron.DemoId.Value.ToString() : "")
+            new Claim("demoId", patron.DemoId.ToString())
         };
 
         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(

@@ -3,5 +3,5 @@
 namespace LibraryApp.Core.Interfaces;
 public interface IPatronService
 {
-    Task<Patron> GenerateRandomPatronAsync(bool isDemoPatron = true);
+    Task<Patron> GenerateRandomPatronAsync();
 }

@@ -10,11 +10,12 @@ public class Patron: BaseEntity
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string LoginCode { get; private set; }
-    public int? DemoId { get; private set; }
     public string PasswordHash { get; private set; }
     public string PasswordSalt { get; private set; }
+    public int DemoId { get; private set; }
+    public DemoInfo Demo { get; private set; }
 
-    public Patron(string firstName, string lastName, string loginCode, int? demoId, string passwordHash, string passwordSalt)
+    public Patron(string firstName, string lastName, string loginCode, int demoId, string passwordHash, string passwordSalt)
     {
         FirstName = firstName;
         LastName = lastName;

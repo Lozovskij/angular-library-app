@@ -30,7 +30,7 @@ public class LibraryAppContextSeed
         var passwordSaltStr = "nnw/qsRS3uUR8rZLOv9/iRaeB2TfB3+kXbJ+esKU520tvT5S3bpb6abnylC08ddgn6RWs+kg9mHN0vw/L3ZkNAPiumff8j2NfCXSRiE43lH1niMc8TvrzX0vsJoiBqqtwyHuRcSRm/L+NFv3SNG5SBLbyOe9ckPJaJILHRgeYeE=";
         return new List<Patron>()
 		{
-			new("Ivan", "Lazouski", "SQ42", null, passwordHashStr, passwordSaltStr),
+			new("Ivan", "Lazouski", "SQ42", 1, passwordHashStr, passwordSaltStr),
 		};
 	}
 }

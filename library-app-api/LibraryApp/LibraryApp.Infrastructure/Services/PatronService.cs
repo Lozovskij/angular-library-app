@@ -14,7 +14,7 @@ public class PatronService : IPatronService
         _context = context;
     }
 
-    public Task<Patron> GenerateRandomPatronAsync(bool isDemoPatron = true)
+    public Task<Patron> GenerateRandomPatronAsync()
     {
         //I do not need salt and hash, maybe in the future
         var passwordHashStr = "";
