@@ -1,3 +1,4 @@
+using LibraryApp.Core.Entities;
 using LibraryApp.Core.Interfaces;
 using LibraryApp.Infrastructure;
 using LibraryApp.Infrastructure.Data;
@@ -28,6 +29,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPatronService, PatronService>();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
