@@ -15,7 +15,7 @@ export interface Patron {
 export const user: Patron = {
     id: 1,
     fullName: 'Ivan Ivanov',
-    cardNumber: '435-3453-23',
+    cardNumber: '430H',
     phoneNumber: '+375 29 233 33 23',
     email: 'ivan.ivanov@test.mail',
     holds: [],
