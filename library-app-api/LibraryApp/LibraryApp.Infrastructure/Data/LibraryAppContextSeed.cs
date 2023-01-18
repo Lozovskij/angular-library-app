@@ -9,20 +9,33 @@ public class LibraryAppContextSeed
 	{
 		try
 		{
+			//dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
 
-			if(!await dbContext.Patrons.AnyAsync())
+            if (!await dbContext.DemoInfo.AnyAsync())
+            {
+                await dbContext.DemoInfo.AddRangeAsync(
+                    GetPreconfiguredDemoInfo());
+                await dbContext.SaveChangesAsync();
+            }
+
+            if (!await dbContext.Patrons.AnyAsync())
 			{
 				await dbContext.Patrons.AddRangeAsync(
 					GetPreconfiguredPatrons());
 				await dbContext.SaveChangesAsync();
-            }
-        }
+			}
+		}
 		catch (Exception)
 		{
 			throw;
 		}
     }
+
+	private static IEnumerable<DemoInfo> GetPreconfiguredDemoInfo()
+	{
+		return new List<DemoInfo>() { new DemoInfo() { Id = 1 } };
+	}
 
 	private static IEnumerable<Patron> GetPreconfiguredPatrons()
 	{

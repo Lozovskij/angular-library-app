@@ -54,15 +54,15 @@ namespace LibraryApp.Infrastructure.Migrations
                 name: "AuthorBook",
                 columns: table => new
                 {
-                    AuthorId = table.Column<int>(type: "INTEGER", nullable: false),
+                    AuthorsId = table.Column<int>(type: "INTEGER", nullable: false),
                     BooksId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AuthorBook", x => new { x.AuthorId, x.BooksId });
+                    table.PrimaryKey("PK_AuthorBook", x => new { x.AuthorsId, x.BooksId });
                     table.ForeignKey(
-                        name: "FK_AuthorBook_Authors_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_AuthorBook_Authors_AuthorsId",
+                        column: x => x.AuthorsId,
                         principalTable: "Authors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -97,6 +97,21 @@ namespace LibraryApp.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Authors",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Lev Tolstoy" });
+
+            migrationBuilder.InsertData(
+                table: "Books",
+                columns: new[] { "Id", "Description", "Title", "YearOfPublication" },
+                values: new object[] { 1, "Desctiption Test", "War and Peace, Volume 1", 2014 });
+
+            migrationBuilder.InsertData(
+                table: "AuthorBook",
+                columns: new[] { "AuthorsId", "BooksId" },
+                values: new object[] { 1, 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuthorBook_BooksId",

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace LibraryApp.Core.Entities;
 public class Book : BaseEntity
 {
-    public int Id { get; set; }
     public string Title { get; set; }
     public int YearOfPublication { get; set; }
     public string Description { get; set; }
-    public ICollection<Author> Author { get; set; }
+    public ICollection<Author> Authors { get; set; }
 }

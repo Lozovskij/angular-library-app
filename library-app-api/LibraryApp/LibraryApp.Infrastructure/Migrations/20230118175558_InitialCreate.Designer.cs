@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryApp.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryAppContext))]
-    [Migration("20230116185420_InitialCreate")]
+    [Migration("20230118175558_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -21,17 +21,24 @@ namespace LibraryApp.Infrastructure.Migrations
 
             modelBuilder.Entity("AuthorBook", b =>
                 {
-                    b.Property<int>("AuthorId")
+                    b.Property<int>("AuthorsId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BooksId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("AuthorId", "BooksId");
+                    b.HasKey("AuthorsId", "BooksId");
 
                     b.HasIndex("BooksId");
 
                     b.ToTable("AuthorBook");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorsId = 1,
+                            BooksId = 1
+                        });
                 });
 
             modelBuilder.Entity("LibraryApp.Core.Entities.Author", b =>
@@ -47,6 +54,13 @@ namespace LibraryApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Authors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Lev Tolstoy"
+                        });
                 });
 
             modelBuilder.Entity("LibraryApp.Core.Entities.Book", b =>
@@ -69,6 +83,15 @@ namespace LibraryApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Books");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Desctiption Test",
+                            Title = "War and Peace, Volume 1",
+                            YearOfPublication = 2014
+                        });
                 });
 
             modelBuilder.Entity("LibraryApp.Core.Entities.DemoInfo", b =>
@@ -123,7 +146,7 @@ namespace LibraryApp.Infrastructure.Migrations
                 {
                     b.HasOne("LibraryApp.Core.Entities.Author", null)
                         .WithMany()
-                        .HasForeignKey("AuthorId")
+                        .HasForeignKey("AuthorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
