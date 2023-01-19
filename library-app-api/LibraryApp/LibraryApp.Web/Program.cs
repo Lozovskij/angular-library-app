@@ -1,7 +1,9 @@
 using LibraryApp.Core.Entities;
 using LibraryApp.Core.Interfaces;
+using LibraryApp.Core.Interfaces.Repositories;
 using LibraryApp.Infrastructure;
 using LibraryApp.Infrastructure.Data;
+using LibraryApp.Infrastructure.Data.Repositories;
 using LibraryApp.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -32,6 +34,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPatronService, PatronService>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddScoped<IBooksRepository, BooksRepository>();
 
 builder.Services.AddHttpContextAccessor();
 

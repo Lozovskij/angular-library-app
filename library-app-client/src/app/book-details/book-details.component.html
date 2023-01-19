@@ -1,6 +1,6 @@
 
 <div *ngIf="book">
-    <p>{{ book.author }}</p>
+    <p>{{ book.authors.join(', ') }}</p>
     <h2>{{ book.title }}</h2>
     <p>{{ book.description }}</p>
 </div>

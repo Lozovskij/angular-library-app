@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { BooksService } from '../books-catalog/books.service';
 import { Book, books } from '../temp-data/books';
 
 @Component({
@@ -8,18 +9,16 @@ import { Book, books } from '../temp-data/books';
   styleUrls: ['./book-details.component.scss']
 })
 export class BookDetailsComponent {
-  book: Book | undefined;
+  book: Book | null = null;
 
   constructor(
     private route: ActivatedRoute,
+    private booksService: BooksService,
   ) { }
 
   ngOnInit(): void {
-    // First get the book id from the current route.
     const routeParams = this.route.snapshot.paramMap;
     const bookIdFromRoute = Number(routeParams.get('bookId'));
-
-    // Find the book that correspond with the id provided in route.
-    this.book = books.find(b => b.id === bookIdFromRoute);
+    this.booksService.getBook(bookIdFromRoute).subscribe(b => this.book = b);
   }
 }
