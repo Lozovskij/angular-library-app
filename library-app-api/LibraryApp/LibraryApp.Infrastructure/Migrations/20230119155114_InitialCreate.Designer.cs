@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryApp.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryAppContext))]
-    [Migration("20230118175558_InitialCreate")]
+    [Migration("20230119155114_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -47,11 +47,16 @@ namespace LibraryApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("DemoId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DemoId");
 
                     b.ToTable("Authors");
 
@@ -59,6 +64,7 @@ namespace LibraryApp.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            DemoId = 1,
                             Name = "Lev Tolstoy"
                         });
                 });
@@ -67,6 +73,9 @@ namespace LibraryApp.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DemoId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
@@ -82,14 +91,33 @@ namespace LibraryApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DemoId");
+
                     b.ToTable("Books");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
+                            DemoId = 1,
                             Description = "Desctiption Test",
                             Title = "War and Peace, Volume 1",
+                            YearOfPublication = 2014
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DemoId = 2,
+                            Description = "Desctiption Test",
+                            Title = "Book For Demo #1",
+                            YearOfPublication = 2014
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DemoId = 3,
+                            Description = "Desctiption Test",
+                            Title = "Book For Demo #2",
                             YearOfPublication = 2014
                         });
                 });
@@ -103,6 +131,20 @@ namespace LibraryApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DemoInfo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1
+                        },
+                        new
+                        {
+                            Id = 2
+                        },
+                        new
+                        {
+                            Id = 3
+                        });
                 });
 
             modelBuilder.Entity("LibraryApp.Core.Entities.Patron", b =>
@@ -157,6 +199,28 @@ namespace LibraryApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("LibraryApp.Core.Entities.Author", b =>
+                {
+                    b.HasOne("LibraryApp.Core.Entities.DemoInfo", "Demo")
+                        .WithMany("Authors")
+                        .HasForeignKey("DemoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Demo");
+                });
+
+            modelBuilder.Entity("LibraryApp.Core.Entities.Book", b =>
+                {
+                    b.HasOne("LibraryApp.Core.Entities.DemoInfo", "Demo")
+                        .WithMany("Books")
+                        .HasForeignKey("DemoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Demo");
+                });
+
             modelBuilder.Entity("LibraryApp.Core.Entities.Patron", b =>
                 {
                     b.HasOne("LibraryApp.Core.Entities.DemoInfo", "Demo")
@@ -170,6 +234,10 @@ namespace LibraryApp.Infrastructure.Migrations
 
             modelBuilder.Entity("LibraryApp.Core.Entities.DemoInfo", b =>
                 {
+                    b.Navigation("Authors");
+
+                    b.Navigation("Books");
+
                     b.Navigation("Patron")
                         .IsRequired();
                 });

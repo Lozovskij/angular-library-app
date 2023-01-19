@@ -5,15 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LibraryApp.Core.Entities;
-public class Patron: BaseEntity
+public class Patron : BaseDemoEntity
 {
-    public string FirstName { get; private set; }
-    public string LastName { get; private set; }
-    public string LoginCode { get; private set; }
-    public string PasswordHash { get; private set; }
-    public string PasswordSalt { get; private set; }
-    public int DemoId { get; private set; }
-    public DemoInfo Demo { get; private set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string LoginCode { get; set; }
+    public string PasswordHash { get; set; }
+    public string PasswordSalt { get; set; }
 
     public Patron(string firstName, string lastName, string loginCode, int demoId, string passwordHash, string passwordSalt)
     {

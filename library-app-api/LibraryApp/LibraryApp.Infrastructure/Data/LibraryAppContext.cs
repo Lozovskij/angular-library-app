@@ -13,18 +13,45 @@ public class LibraryAppContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<DemoInfo>().HasData(new List<DemoInfo>() {
+            new DemoInfo { Id = 1 },
+            new DemoInfo { Id = 2 },
+            new DemoInfo { Id = 3 }
+        });
+
         modelBuilder
             .Entity<Book>()
             .HasData(new Book {
                 Id = 1,
                 Title = "War and Peace, Volume 1",
                 Description = "Desctiption Test",
-                YearOfPublication = 2014
+                YearOfPublication = 2014,
+                DemoId = 1
+            });
+        modelBuilder
+            .Entity<Book>()
+            .HasData(new Book
+            {
+                Id = 2,
+                Title = "Book For Demo #1",
+                Description = "Desctiption Test",
+                YearOfPublication = 2014,
+                DemoId = 2
+            });
+        modelBuilder
+            .Entity<Book>()
+            .HasData(new Book
+            {
+                Id = 3,
+                Title = "Book For Demo #2",
+                Description = "Desctiption Test",
+                YearOfPublication = 2014,
+                DemoId = 3
             });
 
         modelBuilder
             .Entity<Author>()
-            .HasData(new Author { Id = 1, Name = "Lev Tolstoy" });
+            .HasData(new Author { Id = 1, Name = "Lev Tolstoy", DemoId = 1 });
 
         modelBuilder
             .Entity<Book>()

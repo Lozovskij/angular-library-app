@@ -12,13 +12,6 @@ public class LibraryAppContextSeed
 			//dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
 
-            if (!await dbContext.DemoInfo.AnyAsync())
-            {
-                await dbContext.DemoInfo.AddRangeAsync(
-                    GetPreconfiguredDemoInfo());
-                await dbContext.SaveChangesAsync();
-            }
-
             if (!await dbContext.Patrons.AnyAsync())
 			{
 				await dbContext.Patrons.AddRangeAsync(
@@ -32,11 +25,6 @@ public class LibraryAppContextSeed
 		}
     }
 
-	private static IEnumerable<DemoInfo> GetPreconfiguredDemoInfo()
-	{
-		return new List<DemoInfo>() { new DemoInfo() { Id = 1 } };
-	}
-
 	private static IEnumerable<Patron> GetPreconfiguredPatrons()
 	{
         var passwordHashStr = "7YScPE3aW7qKhj/p2EhBhMmksT1xTsh2BChP0IJmPrx10fimbn3bitrTFIhM9boHebagisf7dUWSBx0RJYuSOQ==";
@@ -44,6 +32,8 @@ public class LibraryAppContextSeed
         return new List<Patron>()
 		{
 			new("Ivan", "Lazouski", "SQ42", 1, passwordHashStr, passwordSaltStr),
+			new("Ivan", "Demo1", "490K", 2, passwordHashStr, passwordSaltStr),
+			new("Ivan", "Demo2", "500K", 3, passwordHashStr, passwordSaltStr),
 		};
 	}
 }

@@ -10,3 +10,9 @@ public abstract class BaseEntity
 {
     public virtual int Id { get; set; }
 }
+
+public abstract class BaseDemoEntity : BaseEntity
+{
+    public virtual DemoInfo Demo { get; set; }
+    public virtual int DemoId { get; set; }
+}

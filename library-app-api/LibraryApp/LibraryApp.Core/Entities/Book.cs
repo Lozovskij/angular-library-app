@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace LibraryApp.Core.Entities;
-public class Book : BaseEntity
+public class Book : BaseDemoEntity
 {
     public string Title { get; set; }
     public int YearOfPublication { get; set; }
