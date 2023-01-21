@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryApp.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryAppContext))]
-    [Migration("20230119155114_InitialCreate")]
+    [Migration("20230121100418_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -82,6 +82,10 @@ namespace LibraryApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -101,24 +105,68 @@ namespace LibraryApp.Infrastructure.Migrations
                             Id = 1,
                             DemoId = 1,
                             Description = "Desctiption Test",
+                            ISBN = "979-8589744965",
                             Title = "War and Peace, Volume 1",
-                            YearOfPublication = 2014
+                            YearOfPublication = 2021
                         },
                         new
                         {
                             Id = 2,
                             DemoId = 2,
                             Description = "Desctiption Test",
+                            ISBN = "979-8589744945",
                             Title = "Book For Demo #1",
-                            YearOfPublication = 2014
+                            YearOfPublication = 2023
                         },
                         new
                         {
                             Id = 3,
                             DemoId = 3,
                             Description = "Desctiption Test",
+                            ISBN = "979-8589744955",
                             Title = "Book For Demo #2",
-                            YearOfPublication = 2014
+                            YearOfPublication = 2023
+                        });
+                });
+
+            modelBuilder.Entity("LibraryApp.Core.Entities.BookInstance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DemoId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("DemoId");
+
+                    b.ToTable("BookInstances");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BookId = 1,
+                            DemoId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BookId = 1,
+                            DemoId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BookId = 1,
+                            DemoId = 1
                         });
                 });
 
@@ -153,6 +201,10 @@ namespace LibraryApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("CardNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("DemoId")
                         .HasColumnType("INTEGER");
 
@@ -161,10 +213,6 @@ namespace LibraryApp.Infrastructure.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LoginCode")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -221,6 +269,25 @@ namespace LibraryApp.Infrastructure.Migrations
                     b.Navigation("Demo");
                 });
 
+            modelBuilder.Entity("LibraryApp.Core.Entities.BookInstance", b =>
+                {
+                    b.HasOne("LibraryApp.Core.Entities.Book", "Book")
+                        .WithMany("bookInstances")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LibraryApp.Core.Entities.DemoInfo", "Demo")
+                        .WithMany()
+                        .HasForeignKey("DemoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Demo");
+                });
+
             modelBuilder.Entity("LibraryApp.Core.Entities.Patron", b =>
                 {
                     b.HasOne("LibraryApp.Core.Entities.DemoInfo", "Demo")
@@ -230,6 +297,11 @@ namespace LibraryApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Demo");
+                });
+
+            modelBuilder.Entity("LibraryApp.Core.Entities.Book", b =>
+                {
+                    b.Navigation("bookInstances");
                 });
 
             modelBuilder.Entity("LibraryApp.Core.Entities.DemoInfo", b =>

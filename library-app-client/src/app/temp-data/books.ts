@@ -3,13 +3,13 @@ export interface Book {
     title: string;
     authors: string[];
     description: string;
+    ISBN: string;
+    publisher: string;
+    yearOfPublication: number;
+}
 
-    //phisical book description fields
-
-    //length: number;
-    //ISBN: string;
-    //publisher: string;
-    //yearOfPublication: number;
+export interface BookInstance {
+    id: number;
 }
 
 export const books = [

@@ -5,11 +5,11 @@ using RandomNameGeneratorLibrary;
 using System;
 
 namespace LibraryApp.Infrastructure.Services;
-public class PatronService : IPatronService
+public class RandomPatronGenerator : IRandomPatronGenerator
 {
     private readonly LibraryAppContext _context;
 
-    public PatronService(LibraryAppContext context)
+    public RandomPatronGenerator(LibraryAppContext context)
     {
         _context = context;
     }
@@ -37,7 +37,7 @@ public class PatronService : IPatronService
         var r = new Random();
         var res = getRandomCode();
         var repeat = 10;
-        while (_context.Patrons.Any(p => p.LoginCode == res))
+        while (_context.Patrons.Any(p => p.CardNumber == res))
         {
             res = getRandomCode();
             repeat--;

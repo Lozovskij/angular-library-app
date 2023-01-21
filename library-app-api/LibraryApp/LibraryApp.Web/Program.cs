@@ -31,7 +31,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IPatronService, PatronService>();
+builder.Services.AddScoped<IRandomPatronGenerator, RandomPatronGenerator>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IBooksRepository, BooksRepository>();

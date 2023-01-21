@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 
@@ -15,10 +15,15 @@ export class AuthService {
     }
 
     //returns token
-    loginDemoPatron(): Observable<string> {
+    loginRandomDemoPatron(): Observable<string> {
         return this.http.post('/api/demo/create-and-login-demo-patron', {}, {
             responseType: 'text'
         })
+    }
+
+    loginDemoPatron(demoId: number): Observable<string> {
+        const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+        return this.http.get(`/api/demo/login-demo-patron/${demoId}`, { headers, responseType: 'text' });
     }
 
     // logout() {

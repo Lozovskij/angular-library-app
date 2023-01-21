@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -15,12 +16,12 @@ namespace LibraryApp.Web.Controllers;
 public class DemoController : ControllerBase
 {
     private readonly ITokenService _tokenService;
-    private readonly IPatronService _patronService;
+    private readonly IRandomPatronGenerator _patronService;
     private readonly IRepository<Patron> _patronRepository;
 
     public DemoController(
         ITokenService tokenService,
-        IPatronService patronService,
+        IRandomPatronGenerator patronService,
         IRepository<Patron> patronRepository)
     {
         _tokenService = tokenService;
@@ -35,4 +36,14 @@ public class DemoController : ControllerBase
         _patronRepository.Add(demoPatron);
         return Ok(_tokenService.Create(demoPatron));
     }
+
+    //#if DEBUG
+    [HttpGet("login-demo-patron/{id}")] //TODO should only be accessible on debug level
+    public ActionResult<string> GetDemoToken([FromRoute] int id)
+    {
+        //if (id != 2 || id != 3) { throw new Exception(); }
+        var patron = _patronRepository.GetById(id);
+        return Ok(_tokenService.Create(patron));
+    }
+    //#endif
 }

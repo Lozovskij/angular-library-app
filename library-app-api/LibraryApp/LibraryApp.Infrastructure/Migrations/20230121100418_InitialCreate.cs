@@ -51,8 +51,9 @@ namespace LibraryApp.Infrastructure.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
-                    YearOfPublication = table.Column<int>(type: "INTEGER", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
+                    ISBN = table.Column<string>(type: "TEXT", nullable: false),
+                    YearOfPublication = table.Column<int>(type: "INTEGER", nullable: false),
                     DemoId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -74,7 +75,7 @@ namespace LibraryApp.Infrastructure.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
-                    LoginCode = table.Column<string>(type: "TEXT", nullable: false),
+                    CardNumber = table.Column<string>(type: "TEXT", nullable: false),
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
                     PasswordSalt = table.Column<string>(type: "TEXT", nullable: false),
                     DemoId = table.Column<int>(type: "INTEGER", nullable: false)
@@ -114,6 +115,32 @@ namespace LibraryApp.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "BookInstances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BookId = table.Column<int>(type: "INTEGER", nullable: false),
+                    DemoId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BookInstances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BookInstances_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BookInstances_DemoInfo_DemoId",
+                        column: x => x.DemoId,
+                        principalTable: "DemoInfo",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "DemoInfo",
                 column: "Id",
@@ -131,18 +158,28 @@ namespace LibraryApp.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "DemoId", "Description", "Title", "YearOfPublication" },
+                columns: new[] { "Id", "DemoId", "Description", "ISBN", "Title", "YearOfPublication" },
                 values: new object[,]
                 {
-                    { 1, 1, "Desctiption Test", "War and Peace, Volume 1", 2014 },
-                    { 2, 2, "Desctiption Test", "Book For Demo #1", 2014 },
-                    { 3, 3, "Desctiption Test", "Book For Demo #2", 2014 }
+                    { 1, 1, "Desctiption Test", "979-8589744965", "War and Peace, Volume 1", 2021 },
+                    { 2, 2, "Desctiption Test", "979-8589744945", "Book For Demo #1", 2023 },
+                    { 3, 3, "Desctiption Test", "979-8589744955", "Book For Demo #2", 2023 }
                 });
 
             migrationBuilder.InsertData(
                 table: "AuthorBook",
                 columns: new[] { "AuthorsId", "BooksId" },
                 values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "BookInstances",
+                columns: new[] { "Id", "BookId", "DemoId" },
+                values: new object[,]
+                {
+                    { 1, 1, 1 },
+                    { 2, 1, 1 },
+                    { 3, 1, 1 }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AuthorBook_BooksId",
@@ -152,6 +189,16 @@ namespace LibraryApp.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Authors_DemoId",
                 table: "Authors",
+                column: "DemoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookInstances_BookId",
+                table: "BookInstances",
+                column: "BookId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookInstances_DemoId",
+                table: "BookInstances",
                 column: "DemoId");
 
             migrationBuilder.CreateIndex(
@@ -171,6 +218,9 @@ namespace LibraryApp.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AuthorBook");
+
+            migrationBuilder.DropTable(
+                name: "BookInstances");
 
             migrationBuilder.DropTable(
                 name: "Patrons");

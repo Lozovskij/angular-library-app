@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Book } from '../temp-data/books';
+import { Book, BookInstance } from '../temp-data/books';
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +16,12 @@ export class BooksService {
 
     getBook(id: number): Observable<Book> {
         return this.http.get<Book>(`/api/books/${id}`, {
+            params: { id: id.toString() }
+        });
+    }
+
+    getBookInstances(id: number): Observable<BookInstance[]> {
+        return this.http.get<BookInstance[]>(`/api/books/${id}/book-instances`, {
             params: { id: id.toString() }
         });
     }

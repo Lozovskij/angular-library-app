@@ -1,8 +1,8 @@
 ﻿using LibraryApp.Core.Entities;
 using LibraryApp.Core.Interfaces;
 using LibraryApp.Core.Interfaces.Repositories;
-using LibraryApp.Web.DTO;
-using Microsoft.AspNetCore.Http;
+using LibraryApp.Infrastructure.Models;
+using LibraryApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Web.Controllers;
@@ -11,34 +11,33 @@ namespace LibraryApp.Web.Controllers;
 public class BooksController : ControllerBase
 {
     private readonly IBooksRepository _booksRepository;
+    private readonly IRepository<BookInstance> _instancesRepository;
 
-    public BooksController(IBooksRepository booksRepository)
+    public BooksController(
+        IBooksRepository booksRepository,
+        IRepository<BookInstance> instancesRepository
+    )
     {
         _booksRepository = booksRepository;
+        _instancesRepository = instancesRepository;
     }
 
     [HttpGet]
-    public IEnumerable<BookModel> GetBooks()
+    public IEnumerable<BookDto> GetBooks()
     {
-        return _booksRepository.List().Select(b => new BookModel
-        {
-            Id = b.Id,
-            Title = b.Title,
-            Authors = b.Authors.Select(a => a.Name).ToList(),
-            Description = b.Description,
-        });
+        return _booksRepository.List().Select(book => new BookDto(book));
     }
 
     [HttpGet("{id}")]
-    public BookModel GetBook([FromQuery] int id)
+    public BookDto GetBook([FromQuery] int id)
     {
         Book book = _booksRepository.GetById(id);
-        return new BookModel()
-        {
-            Id = book.Id,
-            Title = book.Title,
-            Authors = book.Authors.Select(a => a.Name).ToList(),
-            Description = book.Description,
-        };
+        return new BookDto(book);
+    }
+
+    [HttpGet("{id}/book-instances")]
+    public IEnumerable<BookInstanceDto> GetBookInstances([FromQuery] int id)
+    {
+        return _instancesRepository.List(i => i.BookId == id).Select(bi => new BookInstanceDto(bi));
     }
 }

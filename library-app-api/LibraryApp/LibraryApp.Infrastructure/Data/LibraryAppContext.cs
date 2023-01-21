@@ -8,6 +8,7 @@ public class LibraryAppContext : DbContext
     public LibraryAppContext(DbContextOptions<LibraryAppContext> options) : base(options) { }
     public DbSet<Patron> Patrons { get; set; }
     public DbSet<Book> Books { get; set; }
+    public DbSet<BookInstance> BookInstances { get; set; }
     public DbSet<Author> Authors { get; set; }
     public DbSet<DemoInfo> DemoInfo { get; set; }
 
@@ -19,35 +20,39 @@ public class LibraryAppContext : DbContext
             new DemoInfo { Id = 3 }
         });
 
-        modelBuilder
-            .Entity<Book>()
-            .HasData(new Book {
+        modelBuilder.Entity<Book>().HasData(new List<Book>() {
+            new Book {
                 Id = 1,
                 Title = "War and Peace, Volume 1",
                 Description = "Desctiption Test",
-                YearOfPublication = 2014,
+                ISBN = "979-8589744965",
+                YearOfPublication = 2021,
                 DemoId = 1
-            });
-        modelBuilder
-            .Entity<Book>()
-            .HasData(new Book
-            {
+            },
+            new Book {
                 Id = 2,
                 Title = "Book For Demo #1",
+                ISBN = "979-8589744945",
+                YearOfPublication = 2023,
                 Description = "Desctiption Test",
-                YearOfPublication = 2014,
                 DemoId = 2
-            });
-        modelBuilder
-            .Entity<Book>()
-            .HasData(new Book
-            {
+            },
+            new Book {
                 Id = 3,
                 Title = "Book For Demo #2",
+                ISBN = "979-8589744955",
+                YearOfPublication = 2023,
                 Description = "Desctiption Test",
-                YearOfPublication = 2014,
                 DemoId = 3
-            });
+            }
+        });
+
+        modelBuilder.Entity<BookInstance>().HasData(new List<BookInstance>()
+        {
+            new BookInstance { Id = 1, BookId = 1, DemoId = 1 },
+            new BookInstance { Id = 2, BookId = 1, DemoId = 1 },
+            new BookInstance { Id = 3, BookId = 1, DemoId = 1 },
+        });
 
         modelBuilder
             .Entity<Author>()

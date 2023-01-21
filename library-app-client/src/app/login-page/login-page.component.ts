@@ -13,9 +13,19 @@ export class LoginPageComponent {
         private authService: AuthService,
     ) { }
 
-    loginPatron() {
-        const sub = this.authService.loginDemoPatron().subscribe(
+    registerAndLoginPatron() {
+        const sub = this.authService.loginRandomDemoPatron().subscribe(
             (token: string) => {
+                localStorage.setItem('authToken', token);
+                this.router.navigate(['/catalog']);
+            }
+        );
+    }
+
+    loginPatron(id: number) {
+        const sub = this.authService.loginDemoPatron(id).subscribe(
+            (token: string) => {
+                console.log(token);
                 localStorage.setItem('authToken', token);
                 this.router.navigate(['/catalog']);
             }
