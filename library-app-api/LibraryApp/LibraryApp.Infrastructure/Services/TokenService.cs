@@ -22,7 +22,8 @@ public class TokenService : ITokenService
         {
             //TODO use constants
             new Claim(ClaimTypes.Role, "Patron"),
-            new Claim("demoId", patron.DemoId.ToString())
+            new Claim("demoId", patron.DemoId.ToString()),
+            new Claim("userId", patron.Id.ToString())
         };
 
         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
@@ -32,7 +33,7 @@ public class TokenService : ITokenService
 
         var token = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddDays(1),//TODO get this from somewhere, do not hardcode
+            expires: DateTime.Now.AddYears(1),//TODO get this from somewhere, do not hardcode
             signingCredentials: creds);
 
         string tokenStr = new JwtSecurityTokenHandler().WriteToken(token);

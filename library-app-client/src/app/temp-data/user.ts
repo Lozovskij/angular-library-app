@@ -8,10 +8,10 @@ export interface Patron {
     
     //TODO how to add picture
 
-    phoneNumber: string | null;
-    email: string | null;
-    holds: Book[];
-    checkedOutBooks: Book[];
+    // phoneNumber: string | null;
+    // email: string | null;
+    // holds: Book[];
+    // checkedOutBooks: Book[];
 }
 
 export const user: Patron = {
@@ -19,8 +19,8 @@ export const user: Patron = {
     firstName: "Ivan",
     lastName: "Ivanov",
     cardNumber: '430H',
-    phoneNumber: '+375 29 233 33 23',
-    email: 'ivan.ivanov@test.mail',
-    holds: [],
-    checkedOutBooks: [],
+    //phoneNumber: '+375 29 233 33 23',
+    //email: 'ivan.ivanov@test.mail',
+    //holds: [],
+    //checkedOutBooks: [],
 }

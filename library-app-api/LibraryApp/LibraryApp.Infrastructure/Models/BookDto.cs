@@ -1,7 +1,6 @@
 ﻿using LibraryApp.Core.Entities;
-using LibraryApp.Infrastructure.Models;
 
-namespace LibraryApp.Web.Models;
+namespace LibraryApp.Infrastructure.Models;
 
 public class BookDto
 {

@@ -2,7 +2,6 @@
 using LibraryApp.Core.Interfaces;
 using LibraryApp.Core.Interfaces.Repositories;
 using LibraryApp.Infrastructure.Models;
-using LibraryApp.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Web.Controllers;
