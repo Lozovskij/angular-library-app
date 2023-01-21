@@ -13,6 +13,7 @@ public class Patron : BaseDemoEntity
     // put password related data into owned type (but what are the benefits?)
     public string PasswordHash { get; set; }
     public string PasswordSalt { get; set; }
+    public List<BookInstance> BookInstances { get; set; }
     public Patron(string firstName, string lastName, string cardNumber, int demoId, string passwordHash, string passwordSalt)
     {
         FirstName = firstName;

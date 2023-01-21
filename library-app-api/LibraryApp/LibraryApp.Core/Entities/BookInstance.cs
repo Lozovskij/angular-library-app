@@ -3,6 +3,14 @@ public class BookInstance : BaseDemoEntity
 {
     public Book Book { get; set; }
     public int BookId { get; set; }
+    public Patron? Patron { get; set; } //Patron is null when status == available
+    public int? PatronId { get; set; }
+    public BookInstanceStatus Status { get; set; }
+}
 
-    //TODO: add Patrons history (patron and dates of check in/ check out)
+public enum BookInstanceStatus
+{
+    Available,
+    OnHold,
+    CheckedOut,
 }
