@@ -1,3 +1,51 @@
-<div *ngIf="profile">
-    Hello
+<div *ngIf="profile" class="main-container">
+    <div class="container-template profile-container">
+        <span><b>Ivan Lazouski</b></span><br>
+        <span>123LP</span>
+    </div>
+    <div class="container-template contacts-container">
+        <table>
+            <tr>
+                <td>Email:</td>
+                <td>Ivan@gmail.com</td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td>+375 (29) 333-49-06</td>
+            </tr>
+        </table>
+    </div>
+    <div class="container-template books-container">
+        <h4><b>Holds</b></h4>
+        <table>
+            <tr>
+                <td><a class="txtlink">War and Peace, Volume 1</a></td>
+                <td><button>Cancel Hold</button></td>
+            </tr>
+            <tr>
+                <td>Random book</td>
+                <td><button>Cancel Hold</button></td>
+            </tr>
+            <tr>
+                <td>Other book</td>
+                <td><button>Cancel Hold</button></td>
+            </tr>
+        </table>
+    </div>
+    <div class="container-template books-container">
+        <h4><b>Checked out books</b></h4>
+        <table>
+            <tr>
+                <td>War and Peace, Volume 1</td>
+                <td> <div class="label">Overdue</div></td>
+            </tr>
+            <tr>
+                <td>Random book</td>
+                <td> <div class="label">Overdue</div></td>
+            </tr>
+            <tr>
+                <td>Other book</td>
+            </tr>
+        </table>
+    </div>
 </div>
