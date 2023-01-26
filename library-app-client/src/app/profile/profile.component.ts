@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BookInstance, BookInstanceStatus } from '../temp-data/books';
+import { BookInstance, BookInstanceStatus } from '../shared/models/books';
 import { PatronProfile, ProfileService } from './profile.service';
 
 @Component({

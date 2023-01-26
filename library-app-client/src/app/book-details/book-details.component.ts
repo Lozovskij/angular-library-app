@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { BooksService } from '../books-catalog/books.service';
-import { Book, BookInstance } from '../temp-data/books';
+import { Book, BookInstance } from '../shared/models/books';
 
 @Component({
     selector: 'app-book-details',

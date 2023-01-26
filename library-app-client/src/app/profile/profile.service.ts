@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BookInstance } from '../temp-data/books';
-import { Patron } from '../temp-data/patron';
+import { BookInstance } from '../shared/models/books';
+import { Patron } from '../shared/models/patron';
 
 @Injectable({
     providedIn: 'root'

@@ -1,5 +1,3 @@
-import { Book } from "./books";
-
 export class Patron {
     id: number | undefined;
     firstName: string | undefined;
