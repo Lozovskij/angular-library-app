@@ -10,15 +10,12 @@ namespace LibraryApp.Web.Controllers;
 public class BooksController : ControllerBase
 {
     private readonly IBooksRepository _booksRepository;
-    private readonly IRepository<BookInstance> _instancesRepository;
 
     public BooksController(
-        IBooksRepository booksRepository,
-        IRepository<BookInstance> instancesRepository
+        IBooksRepository booksRepository
     )
     {
         _booksRepository = booksRepository;
-        _instancesRepository = instancesRepository;
     }
 
     [HttpGet]
@@ -32,11 +29,5 @@ public class BooksController : ControllerBase
     {
         Book book = _booksRepository.GetById(id);
         return new BookDto(book);
-    }
-
-    [HttpGet("{id}/book-instances")]
-    public IEnumerable<BookInstanceDto> GetBookInstances([FromQuery] int id)
-    {
-        return _instancesRepository.List(i => i.BookId == id).Select(bi => new BookInstanceDto(bi));
     }
 }

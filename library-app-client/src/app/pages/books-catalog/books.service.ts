@@ -19,10 +19,4 @@ export class BooksService {
             params: { id: id.toString() }
         });
     }
-
-    getBookInstances(bookId: number): Observable<BookInstance[]> {
-        return this.http.get<BookInstance[]>(`/api/books/${bookId}/book-instances`, {
-            params: { id: bookId.toString() }
-        });
-    }
 }

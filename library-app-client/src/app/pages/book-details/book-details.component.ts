@@ -11,7 +11,6 @@ import { Book, BookInstance } from '../../shared/models/books';
 })
 export class BookDetailsComponent {
     book: Book | null = null;
-    bookInstanses: BookInstance[] | null = null;
 
     constructor(
         private route: ActivatedRoute,
@@ -22,10 +21,6 @@ export class BookDetailsComponent {
         const routeParams = this.route.snapshot.paramMap;
         const bookIdFromRoute = Number(routeParams.get('bookId'));
         
-        this.booksService.getBook(bookIdFromRoute).pipe(
-            tap(book => this.book = book),
-            switchMap(_ => this.booksService.getBookInstances(bookIdFromRoute)),
-            tap(instances => this.bookInstanses = instances)
-        ).subscribe();
+        this.booksService.getBook(bookIdFromRoute).subscribe(book => this.book = book)
     }
 }
