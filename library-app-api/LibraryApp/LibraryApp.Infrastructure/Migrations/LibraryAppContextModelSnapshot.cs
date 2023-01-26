@@ -36,6 +36,21 @@ namespace LibraryApp.Infrastructure.Migrations
                         {
                             AuthorsId = 1,
                             BooksId = 1
+                        },
+                        new
+                        {
+                            AuthorsId = 2,
+                            BooksId = 4
+                        },
+                        new
+                        {
+                            AuthorsId = 3,
+                            BooksId = 5
+                        },
+                        new
+                        {
+                            AuthorsId = 4,
+                            BooksId = 6
                         });
                 });
 
@@ -64,6 +79,24 @@ namespace LibraryApp.Infrastructure.Migrations
                             Id = 1,
                             DemoId = 1,
                             Name = "Lev Tolstoy"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DemoId = 1,
+                            Name = "Antoine de Saint-Exupéry"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DemoId = 1,
+                            Name = "Alexandre Dumas"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DemoId = 1,
+                            Name = "Aldous Huxley"
                         });
                 });
 
@@ -113,7 +146,7 @@ namespace LibraryApp.Infrastructure.Migrations
                             DemoId = 2,
                             Description = "Desctiption Test",
                             ISBN = "979-8589744945",
-                            Title = "Book For Demo #1",
+                            Title = "Test 1",
                             YearOfPublication = 2023
                         },
                         new
@@ -122,8 +155,35 @@ namespace LibraryApp.Infrastructure.Migrations
                             DemoId = 3,
                             Description = "Desctiption Test",
                             ISBN = "979-8589744955",
-                            Title = "Book For Demo #2",
+                            Title = "Test 2",
                             YearOfPublication = 2023
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DemoId = 1,
+                            Description = "Desctiption Test",
+                            ISBN = " 978-0547978840",
+                            Title = "The Little Prince",
+                            YearOfPublication = 2013
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DemoId = 1,
+                            Description = "Desctiption Test",
+                            ISBN = "978-0140449266",
+                            Title = "The Count of Monte Cristo",
+                            YearOfPublication = 2003
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DemoId = 1,
+                            Description = "Desctiption Test",
+                            ISBN = "978-0060850524",
+                            Title = "Brave New World",
+                            YearOfPublication = 2006
                         });
                 });
 
@@ -154,29 +214,6 @@ namespace LibraryApp.Infrastructure.Migrations
                     b.HasIndex("PatronId");
 
                     b.ToTable("BookInstances");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BookId = 1,
-                            DemoId = 1,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BookId = 1,
-                            DemoId = 1,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BookId = 1,
-                            DemoId = 1,
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("LibraryApp.Core.Entities.DemoInfo", b =>

@@ -31,7 +31,7 @@ public class LibraryAppContext : DbContext
             },
             new Book {
                 Id = 2,
-                Title = "Book For Demo #1",
+                Title = "Test 1",
                 ISBN = "979-8589744945",
                 YearOfPublication = 2023,
                 Description = "Desctiption Test",
@@ -39,24 +39,46 @@ public class LibraryAppContext : DbContext
             },
             new Book {
                 Id = 3,
-                Title = "Book For Demo #2",
+                Title = "Test 2",
                 ISBN = "979-8589744955",
                 YearOfPublication = 2023,
                 Description = "Desctiption Test",
                 DemoId = 3
-            }
-        });
-
-        modelBuilder.Entity<BookInstance>().HasData(new List<BookInstance>()
-        {
-            new BookInstance { Id = 1, BookId = 1, DemoId = 1 },
-            new BookInstance { Id = 2, BookId = 1, DemoId = 1 },
-            new BookInstance { Id = 3, BookId = 1, DemoId = 1 },
+            },
+            new Book {
+                Id = 4,
+                Title = "The Little Prince",
+                Description = "Desctiption Test",
+                ISBN = " 978-0547978840",
+                YearOfPublication = 2013,
+                DemoId = 1
+            },
+            new Book {
+                Id = 5,
+                Title = "The Count of Monte Cristo",
+                Description = "Desctiption Test",
+                ISBN = "978-0140449266",
+                YearOfPublication = 2003,
+                DemoId = 1
+            },
+            new Book {
+                Id = 6,
+                Title = "Brave New World",
+                Description = "Desctiption Test",
+                ISBN = "978-0060850524",
+                YearOfPublication = 2006,
+                DemoId = 1
+            },
         });
 
         modelBuilder
             .Entity<Author>()
-            .HasData(new Author { Id = 1, Name = "Lev Tolstoy", DemoId = 1 });
+            .HasData(new List<Author>() {
+                new Author { Id = 1, Name = "Lev Tolstoy", DemoId = 1 },
+                new Author { Id = 2, Name = "Antoine de Saint-Exupéry", DemoId = 1 },
+                new Author { Id = 3, Name = "Alexandre Dumas", DemoId = 1 },
+                new Author { Id = 4, Name = "Aldous Huxley", DemoId = 1 },
+            });
 
         modelBuilder
             .Entity<Book>()
@@ -64,7 +86,12 @@ public class LibraryAppContext : DbContext
             .WithMany(a => a.Books)
             .UsingEntity(j =>
                 j
-                .HasData(new { AuthorsId = 1, BooksId = 1 })
+                .HasData(
+                    new { AuthorsId = 1, BooksId = 1 },
+                    new { AuthorsId = 2, BooksId = 4 },
+                    new { AuthorsId = 3, BooksId = 5 },
+                    new { AuthorsId = 4, BooksId = 6 }
+                    )
             );
     }
 }

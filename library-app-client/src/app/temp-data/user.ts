@@ -1,12 +1,14 @@
 import { Book } from "./books";
 
-export interface Patron {
-    id: number;
-    firstName: string;
-    lastName: string;
-    cardNumber: string;
+export class Patron {
+    id: number | undefined;
+    firstName: string | undefined;
+    lastName: string | undefined;
+    cardNumber: string | undefined;
+    // phoneNumber: string | undefined;
+    // email: string | undefined;
     
-    //TODO how to add picture
+    //TODO add picture
 
     // phoneNumber: string | null;
     // email: string | null;
@@ -14,13 +16,9 @@ export interface Patron {
     // checkedOutBooks: Book[];
 }
 
-export const user: Patron = {
-    id: 1,
-    firstName: "Ivan",
-    lastName: "Ivanov",
-    cardNumber: '430H',
-    //phoneNumber: '+375 29 233 33 23',
-    //email: 'ivan.ivanov@test.mail',
-    //holds: [],
-    //checkedOutBooks: [],
-}
+
+//phoneNumber: '+375 29 233 33 23',
+//email: 'ivan.ivanov@test.mail',
+//holds: [],
+//checkedOutBooks: [],
+

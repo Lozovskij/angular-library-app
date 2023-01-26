@@ -10,6 +10,15 @@ export interface Book {
 
 export interface BookInstance {
     id: number;
+    title: string;
+    status: BookInstanceStatus;
+}
+
+export enum BookInstanceStatus {
+    Available,
+    OnHold,
+    CheckedOut,
+    Overdue,
 }
 
 export const books = [

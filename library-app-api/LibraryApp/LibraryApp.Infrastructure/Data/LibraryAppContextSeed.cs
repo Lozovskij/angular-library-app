@@ -9,7 +9,7 @@ public class LibraryAppContextSeed
 	{
 		try
 		{
-			//dbContext.Database.EnsureDeleted();
+			dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
 
             if (!await dbContext.Patrons.AnyAsync())
@@ -18,11 +18,60 @@ public class LibraryAppContextSeed
 					GetPreconfiguredPatrons());
 				await dbContext.SaveChangesAsync();
 			}
-		}
+
+            if (!await dbContext.BookInstances.AnyAsync())
+            {
+                await dbContext.BookInstances.AddRangeAsync(
+                    GetPreconfiguredBookInstances());
+                await dbContext.SaveChangesAsync();
+            }
+        }
 		catch (Exception)
 		{
 			throw;
 		}
+    }
+
+	private static IEnumerable<BookInstance> GetPreconfiguredBookInstances()
+	{
+		return new List<BookInstance>()
+		{
+			new BookInstance { BookId = 1, DemoId = 1, Status = BookInstanceStatus.OnHold, PatronId = 1 },
+			new BookInstance { BookId = 1, DemoId = 1 },
+			new BookInstance { BookId = 1, DemoId = 1 },
+            new BookInstance { BookId = 1, DemoId = 1 },
+            new BookInstance { BookId = 1, DemoId = 1 },
+
+            new BookInstance { BookId = 2, DemoId = 1 },
+            new BookInstance { BookId = 2, DemoId = 1 },
+            new BookInstance { BookId = 2, DemoId = 1 },
+            new BookInstance { BookId = 2, DemoId = 1 },
+            new BookInstance { BookId = 2, DemoId = 1 },
+
+            new BookInstance { BookId = 3, DemoId = 1 },
+            new BookInstance { BookId = 3, DemoId = 1 },
+            new BookInstance { BookId = 3, DemoId = 1 },
+            new BookInstance { BookId = 3, DemoId = 1 },
+            new BookInstance { BookId = 3, DemoId = 1 },
+
+            new BookInstance { BookId = 4, DemoId = 1, Status = BookInstanceStatus.OnHold, PatronId = 1 },
+            new BookInstance { BookId = 4, DemoId = 1 },
+            new BookInstance { BookId = 4, DemoId = 1 },
+            new BookInstance { BookId = 4, DemoId = 1 },
+            new BookInstance { BookId = 4, DemoId = 1 },
+
+            new BookInstance { BookId = 5, DemoId = 1, Status = BookInstanceStatus.CheckedOut, PatronId = 1 },
+            new BookInstance { BookId = 5, DemoId = 1 },
+            new BookInstance { BookId = 5, DemoId = 1 },
+            new BookInstance { BookId = 5, DemoId = 1 },
+            new BookInstance { BookId = 5, DemoId = 1 },
+
+            new BookInstance { BookId = 6, DemoId = 1, Status = BookInstanceStatus.Overdue, PatronId = 1 },
+            new BookInstance { BookId = 6, DemoId = 1 },
+            new BookInstance { BookId = 6, DemoId = 1 },
+            new BookInstance { BookId = 6, DemoId = 1 },
+            new BookInstance { BookId = 6, DemoId = 1 },
+        };
     }
 
 	private static IEnumerable<Patron> GetPreconfiguredPatrons()

@@ -35,6 +35,8 @@ builder.Services.AddScoped<IRandomPatronGenerator, RandomPatronGenerator>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IBooksRepository, BooksRepository>();
+builder.Services.AddScoped<IPatronsRepository, PatronsRepository>();
+builder.Services.AddScoped<IBookInstancesRepository, BookInstancesRepository>();
 
 builder.Services.AddHttpContextAccessor();
 

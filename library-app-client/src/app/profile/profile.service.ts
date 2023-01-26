@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Book } from '../temp-data/books';
+import { Book, BookInstance } from '../temp-data/books';
 import { Patron } from '../temp-data/user';
 
 @Injectable({
@@ -18,6 +18,6 @@ export class ProfileService {
 
 export interface PatronProfile {
     patron: Patron;
-    //holds: Book[];
+    books: BookInstance[];
     //checkedOutBooks: Book[];
 }

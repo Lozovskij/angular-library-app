@@ -7,11 +7,12 @@ public class PatronProfileDto
     //public string FirstName { get; set; }
     //public string LastName { get; set; }
     //public string CardNumber { get; set; }
-    public PatronDto patron { get; set; }
-    public PatronProfileDto(Patron patron)
+    public PatronDto Patron { get; set; }
+    public List<BookInstanceDto> Books { get; set; }
+    public PatronProfileDto(Patron patron, List<BookInstance> books)
     {
-        this.patron = new PatronDto(patron);
+        Patron = new PatronDto(patron);
+        Books = new List<BookInstanceDto>();
+        Books.AddRange(books.Select(b => new BookInstanceDto(b)));
     }
-    //public List<BookInstanceDto> Holds { get; set; }
-    //public List<BookInstanceDto> CheckedOutBooks { get; set; }
 }

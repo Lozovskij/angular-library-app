@@ -161,7 +161,13 @@ namespace LibraryApp.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Authors",
                 columns: new[] { "Id", "DemoId", "Name" },
-                values: new object[] { 1, 1, "Lev Tolstoy" });
+                values: new object[,]
+                {
+                    { 1, 1, "Lev Tolstoy" },
+                    { 2, 1, "Antoine de Saint-Exupéry" },
+                    { 3, 1, "Alexandre Dumas" },
+                    { 4, 1, "Aldous Huxley" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Books",
@@ -169,23 +175,22 @@ namespace LibraryApp.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, 1, "Desctiption Test", "979-8589744965", "War and Peace, Volume 1", 2021 },
-                    { 2, 2, "Desctiption Test", "979-8589744945", "Book For Demo #1", 2023 },
-                    { 3, 3, "Desctiption Test", "979-8589744955", "Book For Demo #2", 2023 }
+                    { 2, 2, "Desctiption Test", "979-8589744945", "Test 1", 2023 },
+                    { 3, 3, "Desctiption Test", "979-8589744955", "Test 2", 2023 },
+                    { 4, 1, "Desctiption Test", " 978-0547978840", "The Little Prince", 2013 },
+                    { 5, 1, "Desctiption Test", "978-0140449266", "The Count of Monte Cristo", 2003 },
+                    { 6, 1, "Desctiption Test", "978-0060850524", "Brave New World", 2006 }
                 });
 
             migrationBuilder.InsertData(
                 table: "AuthorBook",
                 columns: new[] { "AuthorsId", "BooksId" },
-                values: new object[] { 1, 1 });
-
-            migrationBuilder.InsertData(
-                table: "BookInstances",
-                columns: new[] { "Id", "BookId", "DemoId", "PatronId", "Status" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, null, 0 },
-                    { 2, 1, 1, null, 0 },
-                    { 3, 1, 1, null, 0 }
+                    { 1, 1 },
+                    { 2, 4 },
+                    { 3, 5 },
+                    { 4, 6 }
                 });
 
             migrationBuilder.CreateIndex(

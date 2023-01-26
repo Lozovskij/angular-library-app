@@ -13,4 +13,5 @@ public enum BookInstanceStatus
     Available,
     OnHold,
     CheckedOut,
+    Overdue
 }
