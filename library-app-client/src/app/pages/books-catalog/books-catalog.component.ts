@@ -9,7 +9,7 @@ import { BooksService } from './books.service';
 })
 export class BooksCatalogComponent {
 
-    public displayedColumns: string[] = ['title', 'author'];
+    public displayedColumns: string[] = ['title', 'authors'];
     public dataSource: Book[] = [];
 
     constructor(
