@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Book } from '../shared/models/books';
+import { Book } from '../../shared/models/books';
 import { BooksService } from './books.service';
 
 @Component({

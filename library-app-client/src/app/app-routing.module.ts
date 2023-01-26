@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BookDetailsComponent } from './book-details/book-details.component';
-import { BooksCatalogComponent } from './books-catalog/books-catalog.component';
-import { LoginPageComponent } from './login-page/login-page.component';
+import { BookDetailsComponent } from './pages/book-details/book-details.component';
+import { BooksCatalogComponent } from './pages/books-catalog/books-catalog.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { CanActivatePatron } from './patron-guard';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
   { path: 'catalog', component: BooksCatalogComponent, canActivate:[ CanActivatePatron ] },
