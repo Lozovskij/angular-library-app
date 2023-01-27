@@ -32,8 +32,9 @@
             <ng-container *ngFor="let book of patronCheckouts()">
                 <tr>
                     <td><a class="txtlink">{{book.title}}</a></td>
+                    
                     <td *ngIf="isOverdue(book)">
-                        <div class="label">Overdue</div>
+                        <app-book-instance-status [status]="getStatus(book)"></app-book-instance-status>
                     </td>
                 </tr>
             </ng-container>

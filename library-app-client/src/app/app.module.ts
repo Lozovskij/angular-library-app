@@ -12,6 +12,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { HttpClientModule, HTTP_INTERCEPTORS }   from '@angular/common/http';
 import { AuthInterceptor } from './auth.interceptor';
+import { BookInstanceStatusComponent } from './components/book-instance-status/book-instance-status.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AuthInterceptor } from './auth.interceptor';
     BookDetailsComponent,
     ProfileComponent,
     LoginPageComponent,
+    BookInstanceStatusComponent,
   ],
   imports: [
     BrowserModule,

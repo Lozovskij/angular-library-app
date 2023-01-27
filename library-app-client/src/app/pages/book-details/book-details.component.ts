@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
 import { BooksService } from '../books-catalog/books.service';
-import { Book, BookInstance } from '../../shared/models/books';
+import { Book, BookInstance, BookInstanceStatus } from '../../shared/models/books';
 
 @Component({
     selector: 'app-book-details',
@@ -11,6 +11,10 @@ import { Book, BookInstance } from '../../shared/models/books';
 })
 export class BookDetailsComponent {
     book: Book | null = null;
+
+    getStatus(): BookInstanceStatus {
+        return BookInstanceStatus.OnHold;
+    }
 
     constructor(
         private route: ActivatedRoute,

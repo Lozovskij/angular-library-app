@@ -1,0 +1,13 @@
+<div *ngIf="status">
+    <div [ngSwitch]="status">
+        <ng-template ngSwitchCase="1">
+            <div class="label label-info">On Hold</div>
+        </ng-template>
+        <ng-template ngSwitchCase="2">
+            <div class="label label-info">Checked Out</div>
+        </ng-template>
+        <ng-template ngSwitchCase="3">
+            <div class="label label-warning">Overdue</div>
+        </ng-template>
+    </div>
+</div>

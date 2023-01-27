@@ -1,0 +1,14 @@
+.label {
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    width: fit-content;
+    padding: 1px 6px;
+   
+    &-warning {
+        background-color: rgb(255, 155, 54);
+    }
+    &-info {
+        background-color: #43678b;
+    }
+}

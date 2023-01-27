@@ -31,6 +31,10 @@ export class ProfileComponent {
         return bookInstance.status === BookInstanceStatus.Overdue;
     }
 
+    getStatus(bookInstance: BookInstance) {
+        return bookInstance.status;
+    }
+
     constructor(profileService: ProfileService) {
         profileService.getPatronProfile().subscribe(p => {
             console.log(p);
