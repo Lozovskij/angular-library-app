@@ -25,7 +25,8 @@ table {
     width: 100%;
 }
 
-td, th {
+td,
+th {
     border-bottom: 1px solid #ddd;
     text-align: left;
     padding: 4px;
@@ -43,13 +44,14 @@ button {
     color: white;
     border: none;
     //margin: auto;
-  }
+}
 
 .txtlink {
     color: rgb(34, 69, 144);
     text-decoration: none;
+
     &:hover {
-        text-decoration: underline; 
+        text-decoration: underline;
         cursor: pointer;
     }
 }
