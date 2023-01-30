@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule} from '@angular/material/table';
 import { BooksCatalogComponent } from './pages/books-catalog/books-catalog.component';
-import { TopBarComponent } from './top-bar/top-bar.component';
+import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { BookDetailsComponent } from './pages/book-details/book-details.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
