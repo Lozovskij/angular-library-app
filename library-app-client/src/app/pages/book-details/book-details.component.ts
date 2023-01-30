@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, tap } from 'rxjs';
-import { BooksService } from '../books-catalog/books.service';
+import { BooksService } from '../../shared/services/books.service';
 import { Book, BookInstance, BookInstanceStatus } from '../../shared/models/books';
 
 @Component({
@@ -11,10 +11,8 @@ import { Book, BookInstance, BookInstanceStatus } from '../../shared/models/book
 })
 export class BookDetailsComponent {
     book: Book | null = null;
-
-    getStatus(): BookInstanceStatus {
-        return BookInstanceStatus.OnHold;
-    }
+    status: BookInstanceStatus | undefined;
+    showNoBookInstancesMessage: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -24,7 +22,22 @@ export class BookDetailsComponent {
     ngOnInit(): void {
         const routeParams = this.route.snapshot.paramMap;
         const bookIdFromRoute = Number(routeParams.get('bookId'));
-        
-        this.booksService.getBook(bookIdFromRoute).subscribe(book => this.book = book)
+        this.booksService.getBook(bookIdFromRoute).subscribe(book => this.book = book);
+        this.booksService.getBookInstanceStatus(bookIdFromRoute)
+            .subscribe(status => {
+                if (status === null)
+                {
+                    this.showNoBookInstancesMessage = true;
+                }
+                else
+                {
+                    this.status = status
+                }
+            });
+    }
+
+    hold(): void {
+        if (this.book === null) { return; }
+        this.booksService.holdBook(this.book.id).subscribe();
     }
 }

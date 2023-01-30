@@ -3,9 +3,12 @@
     <div class="container">
         <h2>{{ book.title }}</h2>
         <p class="author">{{ book.authors.join(', ') }}</p>
-        <app-book-instance-status class="status" [status]="getStatus()"></app-book-instance-status>
+        <app-book-instance-status *ngIf="status; else noBooks" class="status" [status]="status"></app-book-instance-status>
+        <ng-template #noBooks>
+            <p>There are no book instances available</p>
+        </ng-template>
         <p class="description">Aldous Huxley's profoundly important classic of world literature, Brave New World is a searching vision of an unequal, technologically-advanced future where humans are genetically bred, socially indoctrinated, and pharmaceutically anesthetized to passively uphold an authoritarian ruling order–all at the cost of our freedom, full humanity, and perhaps also our souls. “A genius [who] who spent his life decrying the onward march of the Machine” (The New Yorker), Huxley was a man of incomparable talents: equally an artist, a spiritual seeker, and one of history’s keenest observers of human nature and civilization. Brave New World, his masterpiece, has enthralled and terrified millions of readers, and retains its</p>
-        <button>Hold</button>
+        <button (click)="hold()">Hold</button>
         <div class="errors-container">
             <span class="error">error message 1</span><br>
             <span class="error">error message 2</span><br>

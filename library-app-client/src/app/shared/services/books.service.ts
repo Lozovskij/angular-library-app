@@ -20,7 +20,7 @@ export class BooksService {
         });
     }
 
-    getBookInstanceStatus(bookId: number): Observable<BookInstanceStatus> {
+    getBookInstanceStatus(bookId: number): Observable<BookInstanceStatus | null> {
         return this.http.get<BookInstanceStatus>(`/api/books/${bookId}/instance-status`);
     }
 
