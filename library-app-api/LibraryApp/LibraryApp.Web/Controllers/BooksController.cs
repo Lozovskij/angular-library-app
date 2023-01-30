@@ -12,13 +12,16 @@ public class BooksController : ControllerBase
 {
     private readonly IBooksRepository _booksRepository;
     private readonly IBookInstancesRepository _bookInstancesRepository;
+    private readonly IUserService _userService;
 
     public BooksController(
         IBooksRepository booksRepository,
-        IBookInstancesRepository bookInstancesRepository)
+        IBookInstancesRepository bookInstancesRepository,
+        IUserService userService)
     {
         _booksRepository = booksRepository;
         _bookInstancesRepository = bookInstancesRepository;
+        _userService = userService;
     }
 
     [HttpGet]
@@ -37,9 +40,7 @@ public class BooksController : ControllerBase
     [HttpGet("{bookId}/instance-status")]
     public BookInstanceStatus? GetBookInstanceStatus([FromRoute] int bookId, CancellationToken cancellationToken)
     {
-        //TODO move all logic to separate service
-        var patronIdStr = HttpContext.User.Claims.First(c => c.Type == "userId").Value;
-        var patronId = int.Parse(patronIdStr);
+        var patronId = _userService.GetUserId();
         var instances = _bookInstancesRepository.List(bi => bi.BookId == bookId).ToList();
         if (instances.Count == 0)
         {

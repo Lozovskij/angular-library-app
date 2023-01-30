@@ -8,5 +8,4 @@ using System.Threading.Tasks;
 namespace LibraryApp.Core.Interfaces.Repositories;
 public interface IBookInstancesRepository : IRepository<BookInstance>
 {
-    IEnumerable<BookInstance> GetBookInstancesByPatronId(int patronId);
 }

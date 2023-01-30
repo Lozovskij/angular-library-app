@@ -12,22 +12,24 @@ public class UserController : ControllerBase
 {
     private readonly IRepository<Patron> _patrons;
     private readonly IBookInstancesRepository _bookInstancesRepository;
+    private readonly IUserService _userService;
 
     public UserController(
-        IRepository<Patron> patrons, 
-        IBookInstancesRepository bookInstancesRepository)
+        IRepository<Patron> patrons,
+        IBookInstancesRepository bookInstancesRepository,
+        IUserService userService)
     {
         _patrons = patrons;
         _bookInstancesRepository = bookInstancesRepository;
+        _userService = userService;
     }
 
     [HttpGet("patron-profile")]
     public PatronProfileDto GetCurrentPatron()
     {
-        //TODO create constants for claim keys
-        var patronId = HttpContext.User.Claims.First(c => c.Type == "userId").Value;
-        var patron = _patrons.GetById(int.Parse(patronId));
-        var bookInstances = _bookInstancesRepository.GetBookInstancesByPatronId(int.Parse(patronId));
-        return new PatronProfileDto(patron, bookInstances.ToList());
+        var patronId = _userService.GetUserId();
+        var patron = _patrons.GetById(patronId);
+        var bookInstances = _bookInstancesRepository.List(bi => bi.PatronId == patronId).ToList();
+        return new PatronProfileDto(patron, bookInstances);
     }
 }

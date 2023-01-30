@@ -5,6 +5,7 @@ using LibraryApp.Infrastructure;
 using LibraryApp.Infrastructure.Data;
 using LibraryApp.Infrastructure.Data.Repositories;
 using LibraryApp.Infrastructure.Services;
+using LibraryApp.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -39,6 +40,8 @@ builder.Services.AddScoped<IPatronsRepository, PatronsRepository>();
 builder.Services.AddScoped<IBookInstancesRepository, BookInstancesRepository>();
 
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IUserService, UserService>();
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

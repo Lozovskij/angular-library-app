@@ -11,11 +11,4 @@ public class BookInstancesRepository : Repository<BookInstance>, IBookInstancesR
     {
         _dbContext = dbContext;
     }
-
-    public IEnumerable<BookInstance> GetBookInstancesByPatronId(int patronId)
-    {
-        return _dbContext.Set<BookInstance>().Where(bi => bi.PatronId == patronId)
-            .Include(bi => bi.Book)
-            .AsEnumerable();
-    }
 }
