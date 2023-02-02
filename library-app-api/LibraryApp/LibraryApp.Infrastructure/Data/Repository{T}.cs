@@ -37,6 +37,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
     public void Edit(T entity)
     {
+        //TODO Do i need to change the state?
         _dbContext.Entry(entity).State = EntityState.Modified;
         _dbContext.SaveChanges();
     }

@@ -13,15 +13,19 @@ public class BooksController : ControllerBase
     private readonly IBooksRepository _booksRepository;
     private readonly IBookInstancesRepository _bookInstancesRepository;
     private readonly IUserService _userService;
+    private readonly IBooksService _booksService;
+
 
     public BooksController(
         IBooksRepository booksRepository,
         IBookInstancesRepository bookInstancesRepository,
-        IUserService userService)
+        IUserService userService,
+        IBooksService booksService)
     {
         _booksRepository = booksRepository;
         _bookInstancesRepository = bookInstancesRepository;
         _userService = userService;
+        _booksService = booksService;
     }
 
     [HttpGet]
@@ -50,16 +54,16 @@ public class BooksController : ControllerBase
     }
 
     [HttpPost("{bookId}/hold")]
-    public ActionResult Hold([FromQuery] int bookId)
+    public async Task<ActionResult> Hold([FromQuery] int bookId)
     {
-        //do it in Core, bookInstanseService.Hold(bookId, patronId)
-        //+ Get userId using infrastracture (userService)
+        await _booksService.Hold(bookId);
+        return Ok();
+    }
 
-        //var availableBookInstances = BookInstances.GetByBookId and by Status.Available (repository list query)
-        //if availableBookInstances not null
-        // bi = availableBookInstances.First()
-        //bookInstanseService.Hold(bi.bookInstanceId, patronId);
-        //set status onhold and patron id, save with repository, 
+    [HttpPost("{bookId}/cancel-hold")]
+    public async Task<ActionResult> CancelHold([FromQuery] int bookId)
+    {
+        await _booksService.CancelHold(bookId);
         return Ok();
     }
 }

@@ -26,7 +26,17 @@ export class BooksService {
 
     holdBook(bookId: number): Observable<any> {
         return this.http.post(`/api/books/${bookId}/hold`, {}, {
-            responseType: 'text'
+            params: {
+                bookId: bookId.toString()
+            }
+        });
+    }
+
+    cancelBookHold(bookId: number): Observable<any> {
+        return this.http.post(`/api/books/${bookId}/cancel-hold`, {}, {
+            params: {
+                bookId: bookId.toString()
+            }
         });
     }
 }

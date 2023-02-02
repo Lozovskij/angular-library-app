@@ -18,10 +18,10 @@
     <div class="container-template books-container">
         <h4><b>Holds</b></h4>
         <table>
-            <ng-container *ngFor="let book of patronHolds()">
+            <ng-container *ngFor="let bi of patronHolds">
                 <tr>
-                    <td><a class="txtlink">{{book.title}}</a></td>
-                    <td><button>Cancel</button></td>
+                    <td><a class="txtlink">{{bi.title}}</a></td>
+                    <td><button (click)="cancelHold(bi.bookId)">Cancel</button></td>
                 </tr>
             </ng-container>
         </table>
@@ -29,12 +29,12 @@
     <div class="container-template books-container">
         <h4><b>Checked out books</b></h4>
         <table>
-            <ng-container *ngFor="let book of patronCheckouts()">
+            <ng-container *ngFor="let bi of patronCheckouts">
                 <tr>
-                    <td><a class="txtlink">{{book.title}}</a></td>
+                    <td><a class="txtlink">{{bi.title}}</a></td>
                     
-                    <td *ngIf="isOverdue(book)">
-                        <app-book-instance-status [status]="getStatus(book)"></app-book-instance-status>
+                    <td *ngIf="isOverdue(bi)">
+                        <app-book-instance-status [status]="bi.status"></app-book-instance-status>
                     </td>
                 </tr>
             </ng-container>

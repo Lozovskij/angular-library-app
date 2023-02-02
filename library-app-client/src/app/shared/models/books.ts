@@ -10,6 +10,7 @@ export interface Book {
 
 export interface BookInstance {
     id: number;
+    bookId: number;
     title: string;
     status: BookInstanceStatus;
 }

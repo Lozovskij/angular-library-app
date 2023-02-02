@@ -9,7 +9,7 @@ public class LibraryAppContextSeed
 	{
 		try
 		{
-			dbContext.Database.EnsureDeleted();
+			//dbContext.Database.EnsureDeleted();
             dbContext.Database.Migrate();
 
             if (!await dbContext.Patrons.AnyAsync())

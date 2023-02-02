@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { BooksService } from 'src/app/shared/services/books.service';
 import { BookInstance, BookInstanceStatus } from '../../shared/models/books';
 import { PatronProfile, ProfileService } from './profile.service';
 
@@ -8,40 +9,38 @@ import { PatronProfile, ProfileService } from './profile.service';
     styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-    profile: PatronProfile | null = null;
+    profile: PatronProfile | undefined;
+    patronHolds: BookInstance[] | undefined;
+    patronCheckouts: BookInstance[] | undefined;
+
+    constructor(
+        private profileService: ProfileService,
+        private booksService: BooksService,
+    ) {
+
+        profileService.getPatronProfile().subscribe(p => {
+            this.profile = p;
+            this.patronHolds = this.profile.books.filter(b => b.status === BookInstanceStatus.OnHold);
+            this.patronCheckouts = this.profile.books.filter(b =>
+                b.status === BookInstanceStatus.CheckedOut ||
+                b.status === BookInstanceStatus.Overdue);
+        });
+    }
 
     patronFullName(): string {
-        if (this.profile === null) {return "";}
-        return this.profile.patron.firstName + " " + this.profile.patron.lastName;
+        return this.profile?.patron.firstName + " " + this.profile?.patron.lastName;
     }
-
-    patronHolds(): BookInstance[] {
-        if (this.profile === null) {return [];}
-        return this.profile.books.filter(b => b.status === BookInstanceStatus.OnHold);
-    }
-
-    patronCheckouts(): BookInstance[] {
-        if (this.profile === null) {return [];}
-        return this.profile.books.filter(b =>
-            b.status === BookInstanceStatus.CheckedOut ||
-            b.status === BookInstanceStatus.Overdue);
-    }
-
+    
     isOverdue(bookInstance: BookInstance) {
         return bookInstance.status === BookInstanceStatus.Overdue;
     }
 
-    getStatus(bookInstance: BookInstance) {
-        return bookInstance.status;
-    }
-
-    constructor(profileService: ProfileService) {
-        profileService.getPatronProfile().subscribe(p => {
-            console.log(p);
-            this.profile = p;
-            console.log(this.patronHolds());
-            console.log(this.patronCheckouts());
-
+    cancelHold(bookId: number) {
+        this.booksService.cancelBookHold(bookId).subscribe({
+            next: () => {
+                this.patronHolds = this.patronHolds?.filter(b => b.bookId !== bookId);
+            },
+            error: (error) => console.log(error)
         });
     }
 }

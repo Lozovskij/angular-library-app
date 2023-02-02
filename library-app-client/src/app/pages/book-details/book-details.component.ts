@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
 import { BooksService } from '../../shared/services/books.service';
-import { Book, BookInstance, BookInstanceStatus } from '../../shared/models/books';
+import { Book, BookInstanceStatus } from '../../shared/models/books';
 
 @Component({
     selector: 'app-book-details',
@@ -12,7 +11,8 @@ import { Book, BookInstance, BookInstanceStatus } from '../../shared/models/book
 export class BookDetailsComponent {
     book: Book | null = null;
     status: BookInstanceStatus | undefined;
-    showNoBookInstancesMessage: boolean = false;
+    showStatus: boolean = false;
+    canHold: boolean = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -25,19 +25,22 @@ export class BookDetailsComponent {
         this.booksService.getBook(bookIdFromRoute).subscribe(book => this.book = book);
         this.booksService.getBookInstanceStatus(bookIdFromRoute)
             .subscribe(status => {
-                if (status === null)
-                {
-                    this.showNoBookInstancesMessage = true;
-                }
-                else
-                {
-                    this.status = status
+                if (status !== null) {
+                    this.status = status;
+                    this.showStatus = true;
+                    this.canHold = this.status?.toString() === BookInstanceStatus.Available.toString();
                 }
             });
     }
 
     hold(): void {
         if (this.book === null) { return; }
-        this.booksService.holdBook(this.book.id).subscribe();
+        this.booksService.holdBook(this.book.id).subscribe(
+            () => {
+                this.status = BookInstanceStatus.OnHold;
+                this.canHold = false;
+            },
+            (error) => console.log(error)
+        );
     }
 }
