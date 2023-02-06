@@ -30,19 +30,20 @@ public class DemoController : ControllerBase
     }
 
     [HttpPost("create-and-login-demo-patron")]
-    public async Task<ActionResult> CreateAndLoginDemoPatron()
+    public async Task<ActionResult> CreateAndLoginDemoPatron(CancellationToken cancellationToken)
     {
         var demoPatron = await _patronService.GenerateRandomPatronAsync();
-        _patronRepository.Add(demoPatron);
+        await _patronRepository.AddAsync(demoPatron, cancellationToken);
         return Ok(_tokenService.Create(demoPatron));
     }
 
     //#if DEBUG
     [HttpGet("login-demo-patron/{id}")] //TODO should only be accessible on debug level
-    public ActionResult<string> GetDemoToken([FromRoute] int id)
+    public async Task<ActionResult<string>> GetDemoToken([FromRoute] int id, CancellationToken cancellationToken)
     {
         //if (id != 2 || id != 3) { throw new Exception(); }
-        var patron = _patronRepository.GetById(id);
+        var patron = await _patronRepository.GetByIdAsync(id, cancellationToken);
+        if (patron == null) { return NotFound(); }
         return Ok(_tokenService.Create(patron));
     }
     //#endif

@@ -14,11 +14,11 @@ public class BookInstancesRepository : Repository<BookInstance>, IBookInstancesR
         _dbContext = dbContext;
     }
 
-    public override IEnumerable<BookInstance> List(Expression<Func<BookInstance, bool>> predicate)
+    public override async Task<IEnumerable<BookInstance>> GetWhereAsync(Expression<Func<BookInstance, bool>> predicate, CancellationToken cancellationToken)
     {
-        return _dbContext.Set<BookInstance>()
+        return await _dbContext.Set<BookInstance>()
             .Include(bi => bi.Book)
             .Where(predicate)
-            .AsEnumerable();
+            .ToListAsync(cancellationToken);
     }
 }

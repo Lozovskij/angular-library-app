@@ -25,11 +25,13 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("patron-profile")]
-    public PatronProfileDto GetCurrentPatron()
+    public async Task<ActionResult<PatronProfileDto>> GetCurrentPatron(CancellationToken cancellationToken)
     {
         var patronId = _userService.GetUserId();
-        var patron = _patrons.GetById(patronId);
-        var bookInstances = _bookInstancesRepository.List(bi => bi.PatronId == patronId).ToList();
-        return new PatronProfileDto(patron, bookInstances);
+        var patron = await _patrons.GetByIdAsync(patronId, cancellationToken);
+        if (patron == null) { return NotFound(); } //TODO move to separate service
+        var bookInstances = await _bookInstancesRepository
+            .GetWhereAsync(bi => bi.PatronId == patronId, cancellationToken);
+        return new PatronProfileDto(patron, bookInstances.ToList());
     }
 }

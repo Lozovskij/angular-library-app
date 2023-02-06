@@ -12,7 +12,6 @@ public class PatronProfileDto
     public PatronProfileDto(Patron patron, List<BookInstance> books)
     {
         Patron = new PatronDto(patron);
-        Books = new List<BookInstanceDto>();
-        Books.AddRange(books.Select(b => new BookInstanceDto(b)));
+        Books = new List<BookInstanceDto>(books.Select(b => new BookInstanceDto(b)));
     }
 }

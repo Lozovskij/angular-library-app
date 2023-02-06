@@ -16,11 +16,4 @@ public class PatronsRepository : Repository<Patron>, IPatronsRepository
     {
         _dbContext = dbContext;
     }
-
-    public override Patron GetById(int id)
-    {
-        return _dbContext.Set<Patron>().Where(p => p.Id == id)
-            .Include(p => p.BookInstances)//book in book instance is not available, is it ok?
-            .Single();
-    }
 }

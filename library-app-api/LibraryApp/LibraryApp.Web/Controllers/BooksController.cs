@@ -29,41 +29,56 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<BookDto> GetBooks()
+    public async Task<IActionResult> GetBooks(CancellationToken cancellationToken)
     {
-        return _booksRepository.List().Select(book => new BookDto(book));
+        var result = (await _booksRepository.GetAllAsync(cancellationToken))
+            .Select(book => new BookDto(book));
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public BookDto GetBook([FromQuery] int id)
+    public async Task<ActionResult<BookDto>> GetBook([FromQuery] int id, CancellationToken cancellationToken)
     {
-        Book book = _booksRepository.GetById(id);
-        return new BookDto(book);
+        Book? book = await _booksRepository.GetByIdAsync(id, cancellationToken);
+        if (book == null)
+        {
+            return NotFound();
+        }
+        return Ok(new BookDto(book));
     }
 
     [HttpGet("{bookId}/instance-status")]
-    public BookInstanceStatus? GetBookInstanceStatus([FromRoute] int bookId, CancellationToken cancellationToken)
+    public async Task<ActionResult<BookInstanceStatus?>> GetBookInstanceStatus(
+        [FromRoute] int bookId,
+        CancellationToken cancellationToken)
     {
         var patronId = _userService.GetUserId();
-        var instances = _bookInstancesRepository.List(bi => bi.BookId == bookId).ToList();
+        var instances = (await _bookInstancesRepository
+            .GetWhereAsync(bi => bi.BookId == bookId, cancellationToken))
+            .ToList();
+
         if (instances.Count == 0)
         {
-            return null;
+            return Ok(null);// TODO (book details) better return 'not found' and handle appropriately on front-end (?)
         }
-        return instances.SingleOrDefault(i => i.PatronId == patronId)?.Status ?? BookInstanceStatus.Available;
+        //is this business logic?
+        var status = instances.SingleOrDefault(i => i.PatronId == patronId)?.Status ??
+            BookInstanceStatus.Available;
+
+        return Ok(status);
     }
 
     [HttpPost("{bookId}/hold")]
-    public async Task<ActionResult> Hold([FromQuery] int bookId)
+    public async Task<ActionResult> Hold([FromQuery] int bookId, CancellationToken cancellationToken)
     {
-        await _booksService.Hold(bookId);
+        await _booksService.Hold(bookId, cancellationToken);
         return Ok();
     }
 
     [HttpPost("{bookId}/cancel-hold")]
-    public async Task<ActionResult> CancelHold([FromQuery] int bookId)
+    public async Task<ActionResult> CancelHold([FromQuery] int bookId, CancellationToken cancellationToken)
     {
-        await _booksService.CancelHold(bookId);
+        await _booksService.CancelHold(bookId, cancellationToken);
         return Ok();
     }
 }

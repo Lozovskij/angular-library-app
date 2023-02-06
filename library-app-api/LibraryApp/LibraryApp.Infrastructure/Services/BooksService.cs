@@ -20,20 +20,21 @@ public class BooksService : IBooksService
         _context = context;
     }
 
-    public async Task CancelHold(int bookId)
+    public async Task CancelHold(int bookId, CancellationToken cancellationToken)
     {
         var patronId = _userService.GetUserId();
 
-        var bookInstance = _bookInstancesRepository.List(bi => bi.BookId == bookId
+        var bookInstance = (await _bookInstancesRepository.GetWhereAsync(
+            bi => bi.BookId == bookId
             && bi.PatronId == patronId
-            && bi.Status == BookInstanceStatus.OnHold).Single();
+            && bi.Status == BookInstanceStatus.OnHold, cancellationToken)).Single();
 
         bookInstance.Status = BookInstanceStatus.Available;
         bookInstance.PatronId = null;
-        _bookInstancesRepository.Edit(bookInstance);
+        await _bookInstancesRepository.UpdateAsync(bookInstance, cancellationToken);
     }
 
-    public async Task Hold(int bookId)
+    public async Task Hold(int bookId, CancellationToken cancellationToken)
     {
         //TODO unit test it!!!!
         var patronId = _userService.GetUserId();
@@ -68,6 +69,6 @@ public class BooksService : IBooksService
         }
         availableInstance.Status = BookInstanceStatus.OnHold;
         availableInstance.PatronId = patronId;
-        _bookInstancesRepository.Edit(availableInstance);
+        await _bookInstancesRepository.UpdateAsync(availableInstance, cancellationToken);
     }
 }

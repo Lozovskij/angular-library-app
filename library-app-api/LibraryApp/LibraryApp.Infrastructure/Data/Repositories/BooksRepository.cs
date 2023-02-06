@@ -13,13 +13,17 @@ public class BooksRepository : Repository<Book>, IBooksRepository
         _dbContext = dbContext;
     }
 
-    public override IEnumerable<Book> List()
+    public override async Task<IEnumerable<Book>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return _dbContext.Set<Book>().Include(b => b.Authors);
+        return await _dbContext.Set<Book>()
+            .Include(b => b.Authors)
+            .ToListAsync(cancellationToken);
     }
 
-    public override Book GetById(int id)
+    public override async Task<Book?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        return _dbContext.Set<Book>().Include(b => b.Authors).Single(b => b.Id == id);
+        return await _dbContext.Set<Book>()
+            .Include(b => b.Authors)
+            .SingleOrDefaultAsync(b => b.Id == id, cancellationToken);
     }
 }

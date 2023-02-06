@@ -1,6 +1,7 @@
 ﻿using LibraryApp.Core.Entities;
 using LibraryApp.Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace LibraryApp.Infrastructure.Data;
 public class Repository<T> : IRepository<T> where T : BaseEntity
@@ -12,39 +13,53 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         _dbContext = dbContext;
     }
 
-    public virtual T GetById(int id)
+    public async Task AddAsync(T entity, CancellationToken cancellationToken)
     {
-        return _dbContext.Set<T>().Find(id);
+        // await Context.AddAsync(entity);
+        await _dbContext.Set<T>().AddAsync(entity, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public virtual IEnumerable<T> List()
+    public async Task UpdateAsync(T entity, CancellationToken cancellationToken)
     {
-        return _dbContext.Set<T>().AsEnumerable();
-    }
-
-    public virtual IEnumerable<T> List(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
-    {
-        return _dbContext.Set<T>()
-               .Where(predicate)
-               .AsEnumerable();
-    }
-
-    public void Add(T entity)
-    {
-        _dbContext.Set<T>().Add(entity);
-        _dbContext.SaveChanges();
-    }
-
-    public void Edit(T entity)
-    {
-        //TODO Do i need to change the state?
+        // In case AsNoTracking is used
         _dbContext.Entry(entity).State = EntityState.Modified;
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public void Delete(T entity)
+    public async Task RemoveAsync(T entity, CancellationToken cancellationToken)
     {
         _dbContext.Set<T>().Remove(entity);
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync(cancellationToken);
+    }
+
+    public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Set<T>().ToListAsync(cancellationToken);
+    }
+
+    public virtual async Task<IEnumerable<T>> GetWhereAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Set<T>().Where(predicate).ToListAsync(cancellationToken);
+    }
+
+    public virtual Task<T?> GetByIdAsync(int id, CancellationToken cancellationToken)
+    {
+        return _dbContext.Set<T>().Where(t => t.Id == id).SingleOrDefaultAsync(cancellationToken); ;
+    }
+
+    public virtual Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+    {
+        return _dbContext.Set<T>().FirstOrDefaultAsync(predicate, cancellationToken);
+    }
+
+    public virtual async Task<int> CountAllAsync(CancellationToken cancellationToken)
+    {
+        return await _dbContext.Set<T>().CountAsync(cancellationToken);
+    }
+
+    public virtual async Task<int> CountWhereAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+    {
+        return await _dbContext.Set<T>().CountAsync(predicate, cancellationToken);
     }
 }
