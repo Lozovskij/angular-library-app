@@ -1,13 +1,19 @@
-﻿using LibraryApp.Infrastructure.Data;
+﻿using LibraryApp.Core.Interfaces;
+using LibraryApp.Infrastructure.Data;
+using LibraryApp.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace LibraryApp.Infrastructure;
-public static class Dependencies
+public static class DependencyInjection
 {
     public static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
     {
         services.AddDbContext<LibraryAppContext>(options => options.UseSqlite(configuration.GetConnectionString("LibraryApp:SQLite")));
+
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IRandomPatronGenerator, RandomPatronGenerator>();
+        services.AddScoped<IBooksService, BooksService>();
     }
 }
