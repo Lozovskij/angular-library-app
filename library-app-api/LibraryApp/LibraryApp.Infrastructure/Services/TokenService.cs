@@ -20,10 +20,10 @@ public class TokenService : ITokenService
     {
         List<Claim> claims = new()
         {
-            //TODO use constants
+            //TODO use constants in final version
             new Claim(ClaimTypes.Role, "Patron"),
             new Claim("demoId", patron.DemoId.ToString()),
-            new Claim("userId", patron.Id.ToString())
+            new Claim(Constants.UserId, patron.Id.ToString())
         };
 
         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(

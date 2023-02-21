@@ -1,10 +1,7 @@
-using LibraryApp.Core.Entities;
 using LibraryApp.Core.Interfaces;
 using LibraryApp.Core.Interfaces.Repositories;
-using LibraryApp.Infrastructure;
 using LibraryApp.Infrastructure.Data;
 using LibraryApp.Infrastructure.Data.Repositories;
-using LibraryApp.Infrastructure.Services;
 using LibraryApp.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +9,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-DependencyInjection.ConfigureServices(builder.Configuration, builder.Services);
+LibraryApp.Infrastructure.DependencyInjection.ConfigureServices(builder.Configuration, builder.Services);
 
 // Add services to the container.
 
@@ -32,11 +29,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-builder.Services.AddScoped<IBooksRepository, BooksRepository>();
-builder.Services.AddScoped<IPatronsRepository, PatronsRepository>();
-builder.Services.AddScoped<IBookInstancesRepository, BookInstancesRepository>();
-
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -54,12 +46,14 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+});
+
 var app = builder.Build();
 
 app.Logger.LogInformation("App created...");
-
 app.Logger.LogInformation("Seeding Database...");
-
 using (var scope = app.Services.CreateScope())
 {
     var scopedProvider = scope.ServiceProvider;
