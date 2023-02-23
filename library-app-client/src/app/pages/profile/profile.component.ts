@@ -1,34 +1,47 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { switchMap, tap } from 'rxjs';
 import { BooksService } from 'src/app/shared/services/books.service';
 import { BookInstance, BookInstanceStatus } from '../../shared/models/books';
-import { PatronProfile, ProfileService } from './profile.service';
+import { PatronApi, PatronBookApi, ProfileService } from './profile.service';
 
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
-    styleUrls: ['./profile.component.scss']
+    styleUrls: ['./profile.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent {
-    profile: PatronProfile | undefined;
-    patronHolds: BookInstance[] | undefined;
-    patronCheckouts: BookInstance[] | undefined;
+
+    isLoading: boolean = true;
+    patron!: PatronApi;
+    patronBooks!: PatronBookApi[];
+    patronHolds!: PatronBookApi[];
+    patronCheckouts!: PatronBookApi[];
+
 
     constructor(
-        private profileService: ProfileService,
+        profileService: ProfileService,
         private booksService: BooksService,
+        cdr: ChangeDetectorRef,
     ) {
-
-        profileService.getPatronProfile().subscribe(p => {
-            this.profile = p;
-            this.patronHolds = this.profile.books.filter(b => b.status === BookInstanceStatus.OnHold);
-            this.patronCheckouts = this.profile.books.filter(b =>
+        profileService.getPatron().pipe(
+            tap(p => this.patron = p),
+            switchMap(_ => profileService.getPatronBooks()),
+            tap(b => this.patronBooks = b.bookInstances)
+        ).subscribe(_ => {
+            this.patronHolds = this.patronBooks.filter(b => b.status === BookInstanceStatus.OnHold);
+            this.patronCheckouts = this.patronBooks.filter(b =>
                 b.status === BookInstanceStatus.CheckedOut ||
                 b.status === BookInstanceStatus.Overdue);
+
+            this.isLoading = false;
+            cdr.markForCheck();
         });
     }
 
     patronFullName(): string {
-        return this.profile?.patron.firstName + " " + this.profile?.patron.lastName;
+        console.log('hello');
+        return this.patron.firstName + " " + this.patron.lastName;
     }
     
     isOverdue(bookInstance: BookInstance) {

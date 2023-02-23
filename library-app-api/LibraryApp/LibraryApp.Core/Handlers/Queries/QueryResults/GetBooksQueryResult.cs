@@ -1,8 +1,8 @@
 ﻿using LibraryApp.Core.Entities;
 
-namespace LibraryApp.Infrastructure.Models;
+namespace LibraryApp.Core.Handlers.Queries.QueryResults;
 
-public class BookDto
+public class GetBooksQueryResult
 {
     public int Id { get; set; }
     public string Title { get; set; }
@@ -10,7 +10,7 @@ public class BookDto
     public string ISBN { get; set; }
     public int YearOfPublication { get; set; }
     public List<string> Authors { get; set; }
-    public BookDto(Book book)
+    public GetBooksQueryResult(Book book)
     {
         Id = book.Id;
         Title = book.Title;

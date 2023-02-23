@@ -1,8 +1,8 @@
 ﻿using LibraryApp.Core.Entities;
 using LibraryApp.Core.Interfaces;
 using LibraryApp.Core.Interfaces.Repositories;
-using LibraryApp.Infrastructure.Data.Repositories;
 using LibraryApp.Infrastructure.Models;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryApp.Web.Controllers;
@@ -10,41 +10,29 @@ namespace LibraryApp.Web.Controllers;
 [ApiController]
 public class BooksController : ControllerBase
 {
-    private readonly IBooksRepository _booksRepository;
-    private readonly IBookInstancesRepository _bookInstancesRepository;
-    private readonly IUserService _userService;
     private readonly IBooksService _booksService;
-
+    private readonly IMediator _mediator;
 
     public BooksController(
-        IBooksRepository booksRepository,
-        IBookInstancesRepository bookInstancesRepository,
-        IUserService userService,
-        IBooksService booksService)
+        IBooksService booksService,
+        IMediator mediator)
     {
-        _booksRepository = booksRepository;
-        _bookInstancesRepository = bookInstancesRepository;
-        _userService = userService;
         _booksService = booksService;
+        _mediator = mediator;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetBooks(CancellationToken cancellationToken)
     {
-        var result = (await _booksRepository.GetAllAsync(cancellationToken))
-            .Select(book => new BookDto(book));
+        var result = await _mediator.Send(new GetBooksQuery(), cancellationToken);
         return Ok(result);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<BookDto>> GetBook([FromQuery] int id, CancellationToken cancellationToken)
+    public async Task<IActionResult> GetBook([FromQuery] int id, CancellationToken cancellationToken)
     {
-        Book? book = await _booksRepository.GetByIdAsync(id, cancellationToken);
-        if (book == null)
-        {
-            return NotFound();
-        }
-        return Ok(new BookDto(book));
+        var result = await _mediator.Send(new GetBookQuery(id), cancellationToken);
+        return result == null ? NotFound() : Ok(result);
     }
 
     [HttpGet("{bookId}/instance-status")]
@@ -52,20 +40,8 @@ public class BooksController : ControllerBase
         [FromRoute] int bookId,
         CancellationToken cancellationToken)
     {
-        var patronId = _userService.GetUserId();
-        var instances = (await _bookInstancesRepository
-            .GetWhereAsync(bi => bi.BookId == bookId, cancellationToken))
-            .ToList();
-
-        if (instances.Count == 0)
-        {
-            return Ok(null);// TODO (book details) better return 'not found' and handle appropriately on front-end (?)
-        }
-        //is this business logic?
-        var status = instances.SingleOrDefault(i => i.PatronId == patronId)?.Status ??
-            BookInstanceStatus.Available;
-
-        return Ok(status);
+        var result = await _mediator.Send(new GetBookStatusQuery(bookId), cancellationToken);
+        return Ok(result);
     }
 
     [HttpPost("{bookId}/hold")]

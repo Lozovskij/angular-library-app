@@ -1,3 +1,4 @@
+using LibraryApp.Core.Handlers.Queries;
 using LibraryApp.Core.Interfaces;
 using LibraryApp.Core.Interfaces.Repositories;
 using LibraryApp.Infrastructure.Data;
@@ -48,6 +49,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    cfg.RegisterServicesFromAssemblyContaining(typeof(GetBooksQueryHandler));
 });
 
 var app = builder.Build();

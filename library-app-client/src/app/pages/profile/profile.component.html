@@ -1,20 +1,8 @@
-<div *ngIf="profile" class="main-container">
+<div *ngIf="!isLoading; else loadingSkeleton" class="main-container">
     <div class="container-template profile-container">
         <span><b>{{ patronFullName() }}</b></span><br>
-        <span>{{profile.patron.cardNumber}}</span>
+        <span>{{patron.cardNumber}}</span>
     </div>
-    <!-- <div class="container-template contacts-container">
-        <table>
-            <tr>
-                <td>Email:</td>
-                <td>{{profile.patron.email ?? 'N/A' }}</td>
-            </tr>
-            <tr>
-                <td>Phone Number:</td>
-                <td>{{profile.patron.phoneNumber ?? 'N/A'}}</td>
-            </tr>
-        </table>
-    </div> -->
     <div class="container-template books-container">
         <h4><b>Holds</b></h4>
         <table>
@@ -41,3 +29,6 @@
         </table>
     </div>
 </div>
+<ng-template #loadingSkeleton>
+    <div class="main-container"> loading...</div>
+</ng-template>

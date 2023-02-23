@@ -87,7 +87,9 @@ public class LibraryAppContext : DbContext
             .UsingEntity(j =>
                 j
                 .HasData(
+                    //War and Peace, Volume 1
                     new { AuthorsId = 1, BooksId = 1 },
+                    //The Little Prince
                     new { AuthorsId = 2, BooksId = 4 },
                     new { AuthorsId = 3, BooksId = 5 },
                     new { AuthorsId = 4, BooksId = 6 }

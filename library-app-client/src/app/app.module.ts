@@ -11,7 +11,7 @@ import { BookDetailsComponent } from './pages/book-details/book-details.componen
 import { ProfileComponent } from './pages/profile/profile.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { HttpClientModule, HTTP_INTERCEPTORS }   from '@angular/common/http';
-import { AuthInterceptor } from './auth.interceptor';
+import { AuthInterceptor } from './auth/auth.interceptor';
 import { BookInstanceStatusComponent } from './components/book-instance-status/book-instance-status.component';
 
 @NgModule({

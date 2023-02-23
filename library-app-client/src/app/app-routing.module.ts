@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BookDetailsComponent } from './pages/book-details/book-details.component';
 import { BooksCatalogComponent } from './pages/books-catalog/books-catalog.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { CanActivatePatron } from './patron-guard';
+import { CanActivatePatron } from './auth/patron-guard';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [

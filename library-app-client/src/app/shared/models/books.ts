@@ -21,3 +21,4 @@ export enum BookInstanceStatus {
     CheckedOut,
     Overdue,
 }
+//delete all models. I do not need view models to be shared, it is not the logic
