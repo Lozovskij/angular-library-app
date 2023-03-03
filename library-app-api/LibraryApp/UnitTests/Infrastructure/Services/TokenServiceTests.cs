@@ -16,7 +16,7 @@ public class TokenServiceTests
     }
 
     [Fact]
-    public void Create_UsualScenario_Success()
+    public void Create_OnSuccess_CreatesToken()
     {
         //Arrange
         var passwordHashStr = "7YScPE3aW7qKhj/p2EhBhMmksT1xTsh2BChP0IJmPrx10fimbn3bitrTFIhM9boHebagisf7dUWSBx0RJYuSOQ==";

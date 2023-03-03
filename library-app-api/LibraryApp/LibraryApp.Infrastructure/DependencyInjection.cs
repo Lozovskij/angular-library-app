@@ -17,7 +17,6 @@ public static class DependencyInjection
 
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IRandomPatronGenerator, RandomPatronGenerator>();
-        services.AddScoped<IBooksService, BooksService>();
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IBooksRepository, BooksRepository>();

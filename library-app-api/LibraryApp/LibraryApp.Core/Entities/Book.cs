@@ -12,5 +12,5 @@ public class Book : BaseDemoEntity
     public string ISBN { get; set; }
     public int YearOfPublication { get; set; }
     public List<Author> Authors { get; set; }
-    public List<BookInstance> bookInstances { get; set; }
+    public List<BookInstance> BookInstances { get; set; }
 }

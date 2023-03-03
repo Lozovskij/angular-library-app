@@ -10,7 +10,8 @@ public class Patron : BaseDemoEntity
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string CardNumber { get; set; }
-    // put password related data into owned type (but what are the benefits?)
+    //TODO put password related data into owned type (but what are the benefits?)
+    //TODO why do i need to place it in here? it doesn't make sense
     public string PasswordHash { get; set; }
     public string PasswordSalt { get; set; }
     public List<BookInstance> BookInstances { get; set; }

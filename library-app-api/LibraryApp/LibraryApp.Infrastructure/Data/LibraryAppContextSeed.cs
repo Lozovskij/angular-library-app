@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 namespace LibraryApp.Infrastructure.Data;
 public class LibraryAppContextSeed
 {
-
     public static async Task SeedAsync(LibraryAppContext dbContext)
 	{
 		try
@@ -34,9 +33,21 @@ public class LibraryAppContextSeed
 
 	private static IEnumerable<BookInstance> GetPreconfiguredBookInstances()
 	{
-		return new List<BookInstance>()
+        var patronBooks = new List<BookInstance>()
+        {
+            new BookInstance { BookId = 1, DemoId = 1, PatronId = 1 },
+            new BookInstance { BookId = 4, DemoId = 1, PatronId = 1 },
+            new BookInstance { BookId = 5, DemoId = 1, PatronId = 1 },
+            new BookInstance { BookId = 6, DemoId = 1, PatronId = 1 },
+        };
+
+        patronBooks[0].SetStatus(BookInstanceStatus.OnHold);
+        patronBooks[1].SetStatus(BookInstanceStatus.OnHold);
+        patronBooks[2].SetStatus(BookInstanceStatus.CheckedOut);
+        patronBooks[3].SetStatus(BookInstanceStatus.Overdue);
+
+        var books = new List<BookInstance>()
 		{
-			new BookInstance { BookId = 1, DemoId = 1, Status = BookInstanceStatus.OnHold, PatronId = 1 },
 			new BookInstance { BookId = 1, DemoId = 1 },
 			new BookInstance { BookId = 1, DemoId = 1 },
             new BookInstance { BookId = 1, DemoId = 1 },
@@ -54,24 +65,23 @@ public class LibraryAppContextSeed
             new BookInstance { BookId = 3, DemoId = 1 },
             new BookInstance { BookId = 3, DemoId = 1 },
 
-            new BookInstance { BookId = 4, DemoId = 1, Status = BookInstanceStatus.OnHold, PatronId = 1 },
             new BookInstance { BookId = 4, DemoId = 1 },
             new BookInstance { BookId = 4, DemoId = 1 },
             new BookInstance { BookId = 4, DemoId = 1 },
             new BookInstance { BookId = 4, DemoId = 1 },
 
-            new BookInstance { BookId = 5, DemoId = 1, Status = BookInstanceStatus.CheckedOut, PatronId = 1 },
             new BookInstance { BookId = 5, DemoId = 1 },
             new BookInstance { BookId = 5, DemoId = 1 },
             new BookInstance { BookId = 5, DemoId = 1 },
             new BookInstance { BookId = 5, DemoId = 1 },
 
-            new BookInstance { BookId = 6, DemoId = 1, Status = BookInstanceStatus.Overdue, PatronId = 1 },
             new BookInstance { BookId = 6, DemoId = 1 },
             new BookInstance { BookId = 6, DemoId = 1 },
             new BookInstance { BookId = 6, DemoId = 1 },
             new BookInstance { BookId = 6, DemoId = 1 },
         };
+        books.AddRange(patronBooks);
+        return books;
     }
 
 	private static IEnumerable<Patron> GetPreconfiguredPatrons()

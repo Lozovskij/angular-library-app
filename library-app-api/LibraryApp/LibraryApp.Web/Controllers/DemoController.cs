@@ -1,14 +1,6 @@
 ﻿using LibraryApp.Core.Entities;
 using LibraryApp.Core.Interfaces;
-using LibraryApp.Infrastructure.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace LibraryApp.Web.Controllers;
 [Route("api/[controller]")]

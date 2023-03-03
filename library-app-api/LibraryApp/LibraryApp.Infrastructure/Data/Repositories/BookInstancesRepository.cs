@@ -21,4 +21,26 @@ public class BookInstancesRepository : Repository<BookInstance>, IBookInstancesR
             .Where(predicate)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<IEnumerable<BookInstance>> GetPatronBooksAsync(int patronId, CancellationToken cancellationToken)
+    {
+        return await GetWhereAsync(bi => bi.PatronId == patronId, cancellationToken);
+    }
+
+    public async Task<bool> IsAvailableAsync(int bookId, CancellationToken cancellationToken)
+    {
+        return (await GetWhereAsync(bi => bi.BookId == bookId, cancellationToken))
+            .Any(bi => bi.Status == BookInstanceStatus.Available);
+    }
+
+    public async Task<IEnumerable<BookInstance>> GetAvailableBooksAsync(int bookId, CancellationToken cancellationToken)
+    {
+        return await GetWhereAsync(bi => bi.BookId == bookId && bi.Status == BookInstanceStatus.Available, cancellationToken);
+    }
+
+    public async Task<BookInstance> GetPatronBookAsync(int patronId, int bookId, CancellationToken cancellationToken)
+    {
+        return (await GetWhereAsync(bi => bi.PatronId == patronId && bi.BookId == bookId, cancellationToken))
+            .Single();
+    }
 }

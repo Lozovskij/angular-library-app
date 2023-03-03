@@ -17,7 +17,6 @@ public class GetPatronQueryHandler : IRequestHandler<GetPatronQuery, GetPatronQu
         _userService = userService;
     }
 
-
     public async Task<GetPatronQueryResult> Handle(GetPatronQuery request, CancellationToken cancellationToken)
     {
         var patronId = _userService.GetUserId();
